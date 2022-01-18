@@ -27,20 +27,51 @@ public class User {
 	private String password;
 	private String email;
 	private LocalDateTime createdOn;
+
 	@ManyToOne
 	@JoinColumn(name="role_id") 
 	private Role role;
-	
+
+//	constructor empty
 	public User() {
-		id = 0;
-		firstName = "First";
-		lastName = "Last";
-		username = "username";
-		email = "johncena@yahoo.com";
-		createdOn = LocalDateTime.now();	// ("dd-MM-yyyy HH:mm:ss");
-		role = new Role();
 
 	}
+//contructor with everyting
+	public User(int id,
+				String firstName,
+				String lastName,
+				String username,
+				String password,
+				String email,
+				LocalDateTime createdOn,
+				Role role) {
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.username = username;
+		this.password = password;
+		this.email = email;
+		this.createdOn = createdOn;
+		this.role = role;
+	}
+
+//	 constructor no ID
+	public User(String firstName,
+				String lastName,
+				String username,
+				String password,
+				String email,
+				LocalDateTime createdOn,
+				Role role) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.username = username;
+		this.password = password;
+		this.email = email;
+		this.createdOn = createdOn;
+		this.role = role;
+	}
+
 	public String getFirstName() {
 		return firstName;
 	}

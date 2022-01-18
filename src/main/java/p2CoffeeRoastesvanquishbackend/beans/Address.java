@@ -38,7 +38,8 @@ public class Address
 		street_address= "Default Street Address";
 		city= "Default city";
 		state= "Default state";
-		apt= "Default apt";}
+		apt= "Default apt";
+	}
 	
 
 
