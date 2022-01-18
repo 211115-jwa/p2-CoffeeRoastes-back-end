@@ -1,7 +1,8 @@
 package p2CoffeeRoastesvanquishbackend.beans;
 import java.time.LocalDateTime;
-import java.time.LocalTime;  
-
+import java.time.LocalTime;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,6 +28,7 @@ public class User {
 	private String password;
 	private String email;
 	private LocalDateTime createdOn;
+	private Set<Plan> plans;
 	@ManyToOne
 	@JoinColumn(name="role_id") 
 	private Role role;
@@ -39,7 +41,14 @@ public class User {
 		email = "johncena@yahoo.com";
 		createdOn = LocalDateTime.now();	// ("dd-MM-yyyy HH:mm:ss");
 		role = new Role();
+		plans= new HashSet<Plan>();
 
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	public String getFirstName() {
 		return firstName;
@@ -84,6 +93,12 @@ public class User {
 		this.role = role;
 	}
 	
+	public Set<Plan> getPlans() {
+		return plans;
+	}
+	public void setPlans(Set<Plan> plans) {
+		this.plans = plans;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
