@@ -1,8 +1,6 @@
 package p2CoffeeRoastesvanquishbackend.beans;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -12,7 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
+
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -30,19 +28,14 @@ public class CustomerPlan {
 	
 	@OneToMany
 	@JoinColumn(name="plan_id")
-	//private Plan  plan;
-	 private List<CustomerPlan> customerPlan;
-	
-	
-	/*
-	 * @ManyToMany
-	 * 
-	 * @JoinColumn(name="user_id") private User users;
-	 */
-	
-	@ManyToMany(mappedBy = "customer_plan")
-	private User users;
-	
+	 private Plan  plan;
+		
+		
+		  @OneToMany
+		  @JoinColumn(name="user_id")
+		   private User user;
+		
+		 
 	
 	private LocalDateTime planActivatedDate;
 	private String active_plan = "";
@@ -60,8 +53,8 @@ public class CustomerPlan {
 	public CustomerPlan () {
 		customer_plan_id  = 0;
 		//plan = new Plan() ;
-		customerPlan = new ArrayList<CustomerPlan>();
-		users = new User();
+		plan = new Plan();
+		user = new User();
 		planActivatedDate= LocalDateTime.now();	// ("dd-MM-yyyy HH:mm:ss");
 		active_plan = "";
 		 credit_card= new  Credit_Card();
@@ -95,13 +88,13 @@ public class CustomerPlan {
 
 
 	public User getUser() {
-		return users;
+		return user;
 	}
 
 
 
 	public void setUser(User user) {
-		this.users = user;
+		this.user = user;
 	}
 
 
@@ -152,30 +145,27 @@ public class CustomerPlan {
 		this.credit_card = credit_card;
 	}
 
-	/**
-	 * @return the customerPlan
-	 */
-	public List<CustomerPlan> getCustomerPlan() {
-		return customerPlan;
+	
+	public Plan getCustomerPlan() {
+		return plan;
 	}
 
-
-
-	/**
-	 * @param customerPlan the customerPlan to set
-	 */
-	public void setCustomerPlan(List<CustomerPlan> customerPlan) {
-		this.customerPlan = customerPlan;
+	public void setPlan(Plan plan) {
+		this.plan = plan;
 	}
 
 
 
 	@Override
 	public String toString() {
-		return "CustomerPlan [customer_plan_id=" + customer_plan_id + ", customerPlan=" + customerPlan + ", users="
-				+ users + ", planActivatedDate=" + planActivatedDate + ", active_plan=" + active_plan + ", address="
-				+ address + ", card_id=" + credit_card + "]";
+		return "CustomerPlan [customer_plan_id=" + customer_plan_id + ", plan=" + plan + ", user=" + user
+				+ ", planActivatedDate=" + planActivatedDate + ", active_plan=" + active_plan + ", address=" + address
+				+ ", credit_card=" + credit_card + "]";
 	}
+
+
+
+	
 	
 
 
