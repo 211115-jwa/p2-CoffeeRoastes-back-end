@@ -2,6 +2,7 @@ package p2CoffeeRoastesvanquishbackend.beans;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -10,57 +11,45 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 
 @Entity
 
-@Table( name= "customer_plan", schema = "coffee")
+@Table( name= "customer_plan")
 
 public class CustomerPlan {
 	@Id
-	
 	@GeneratedValue(strategy = GenerationType.AUTO)
-
 	private int customer_plan_id =1;
-	
-	@OneToMany
+	@ManyToOne
 	@JoinColumn(name="plan_id")
-	 private Plan  plan;
-		
-		
-		  @OneToMany
-		  @JoinColumn(name="user_id")
-		   private User user;
-		
-		 
-	
+	private Plan  plan;
+	@ManyToOne
+	@JoinColumn(name="user_id")
+	private User user;
+	@Column(name="plan_activated_date")
 	private LocalDateTime planActivatedDate;
-	private String active_plan = "";
-	
-    @OneToOne
+	private String active_plan;
+	@ManyToOne
     @JoinColumn(name="address_id")
 	private Address address;
-    
-    @OneToOne
+	@ManyToOne
 	@JoinColumn(name="card_id")
-	private Credit_Card  credit_card;
+	private CreditCard credit_card;
 	
 	
 	
 	public CustomerPlan () {
 		customer_plan_id  = 0;
-		//plan = new Plan() ;
+		address = new Address();
 		plan = new Plan();
 		user = new User();
 		planActivatedDate= LocalDateTime.now();	// ("dd-MM-yyyy HH:mm:ss");
-		active_plan = "";
-		 credit_card= new  Credit_Card();
-		
-		
-
+		active_plan = "true";
+		credit_card= new  CreditCard();
 	}
 
 
@@ -75,15 +64,6 @@ public class CustomerPlan {
 		this.customer_plan_id = customer_plan_id;
 	}
 
-
-
-	/*
-	 * public Plan getPlan() { return plan; }
-	 * 
-	 * 
-	 * 
-	 * public void setPlan(Plan plan) { this.plan = plan; }
-	 */
 
 
 
@@ -103,8 +83,6 @@ public class CustomerPlan {
 		return planActivatedDate;
 	}
 
-
-
 	public void setPlanActivatedDate(LocalDateTime planActivatedDate) {
 		this.planActivatedDate = planActivatedDate;
 	}
@@ -117,7 +95,7 @@ public class CustomerPlan {
 
 
 
-	public void setAddress_id(Address address) {
+	public void setAddress(Address address) {
 		this.address = address;
 	}
 
@@ -135,13 +113,13 @@ public class CustomerPlan {
 
 
 
-	public  Credit_Card getCard_id() {
+	public CreditCard getCard() {
 		return credit_card;
 	}
 
 
 
-	public void setCard_id( Credit_Card credit_card) {
+	public void setCard_id(CreditCard credit_card) {
 		this.credit_card = credit_card;
 	}
 

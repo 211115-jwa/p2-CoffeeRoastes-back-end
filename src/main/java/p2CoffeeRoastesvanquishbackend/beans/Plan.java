@@ -1,5 +1,8 @@
 package p2CoffeeRoastesvanquishbackend.beans;
 
+import java.util.Objects;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,35 +11,32 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "plan", schema = "coffee")
+@Table(name = "plan")
 public class Plan {
 	@Id
-
 	@GeneratedValue(strategy = GenerationType.AUTO)
-
-	private int plan_Id = 1;
-
-	private String coffee_preference = " ";
-
-	private String coffee_Type = "";
-
-	private String coffee_quantity = "Medio";
-
-	private String coffee_grind = "";
-
-	private String delivery_frenquency = "";
-
-	private int price = 1;
+	private int plan_Id;
+	@Column
+	private String coffee_preference;
+	@Column
+	private String coffee_type;
+	@Column
+	private String coffee_quantity;
+	@Column
+	private String coffee_grind;
+	@Column
+	private String delivery_frenquency ;
+	@Column
+	private double price;
 
 	public Plan() {
-		super();
 
 		plan_Id = 1;
-		coffee_Type = " ";
+		coffee_type = " ";
 		coffee_quantity = " ";
 		coffee_grind = "";
 		delivery_frenquency = "";
-		price = 12;
+		price = 12.22;
 
 	}
 
@@ -57,11 +57,11 @@ public class Plan {
 	}
 
 	public String getCoffee_Type() {
-		return coffee_Type;
+		return coffee_type;
 	}
 
-	public void setCoffee_Type(String coffee_Type) {
-		this.coffee_Type = coffee_Type;
+	public void setCoffee_Type(String coffee_type) {
+		this.coffee_type = coffee_type;
 	}
 
 	public String getCoffee_quantity() {
@@ -88,19 +88,42 @@ public class Plan {
 		this.delivery_frenquency = delivery_frenquency;
 	}
 
-	public int getPrice() {
+	public double getPrice() {
 		return price;
 	}
 
-	public void setPrice(int price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 
 	@Override
 	public String toString() {
-		return "Plan [plan_Id=" + plan_Id + ", coffee_preference=" + coffee_preference + ", coffee_Type=" + coffee_Type
+		return "Plan [plan_Id=" + plan_Id + ", coffee_preference=" + coffee_preference + ", coffee_Type=" + coffee_type
 				+ ", coffee_quantity=" + coffee_quantity + ", coffee_grind=" + coffee_grind + ", delivery_frenquency="
 				+ delivery_frenquency + ", price=" + price + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(coffee_grind, coffee_preference, coffee_quantity, coffee_type, delivery_frenquency, plan_Id,
+				price);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Plan other = (Plan) obj;
+		return Objects.equals(coffee_grind, other.coffee_grind)
+				&& Objects.equals(coffee_preference, other.coffee_preference)
+				&& Objects.equals(coffee_quantity, other.coffee_quantity)
+				&& Objects.equals(coffee_type, other.coffee_type)
+				&& Objects.equals(delivery_frenquency, other.delivery_frenquency) && plan_Id == other.plan_Id
+				&& Double.doubleToLongBits(price) == Double.doubleToLongBits(other.price);
 	}
 
 }

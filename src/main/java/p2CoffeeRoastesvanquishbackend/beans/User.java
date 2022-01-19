@@ -12,20 +12,28 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 
 @Entity
+@Table( name= "user")
 public class User {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 
 	private int id;
+	@Column 
 	private String firstName;
+	@Column 
 	private String lastName;
+	@Column 
 	private String username;
+	@Column 
 	private String password;
+	@Column 
 	private String email;
+	@Column 
 	private LocalDateTime createdOn;
 	@ManyToOne
 	@JoinColumn(name="role_id") 
@@ -36,10 +44,18 @@ public class User {
 		firstName = "First";
 		lastName = "Last";
 		username = "username";
+		password = "password";
 		email = "johncena@yahoo.com";
 		createdOn = LocalDateTime.now();	// ("dd-MM-yyyy HH:mm:ss");
 		role = new Role();
-
+	}
+	
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	public String getFirstName() {
 		return firstName;
