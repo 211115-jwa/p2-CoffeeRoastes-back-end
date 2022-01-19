@@ -1,9 +1,13 @@
 package p2CoffeeRoastesvanquishbackend.beans;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,12 +30,18 @@ public class CustomerPlan {
 	
 	@OneToMany
 	@JoinColumn(name="plan_id")
-	private int plan_id =1;
+	//private Plan  plan;
+	 private List<CustomerPlan> customerPlan;
 	
 	
-	@ManyToMany
-	@JoinColumn(name="user_id")
-	private int user_id =1;
+	/*
+	 * @ManyToMany
+	 * 
+	 * @JoinColumn(name="user_id") private User users;
+	 */
+	
+	@ManyToMany(mappedBy = "customer_plan")
+	private User users;
 	
 	
 	private LocalDateTime planActivatedDate;
@@ -39,21 +49,22 @@ public class CustomerPlan {
 	
     @OneToOne
     @JoinColumn(name="address_id")
-	private int address_id = 1;
+	private Address address;
     
     @OneToOne
 	@JoinColumn(name="card_id")
-	private int card_id = 23;
+	private Credit_Card  credit_card;
 	
 	
 	
 	public CustomerPlan () {
 		customer_plan_id  = 0;
-		plan_id = 0;
-		user_id =1;
+		//plan = new Plan() ;
+		customerPlan = new ArrayList<CustomerPlan>();
+		users = new User();
 		planActivatedDate= LocalDateTime.now();	// ("dd-MM-yyyy HH:mm:ss");
 		active_plan = "";
-		card_id = 23;
+		 credit_card= new  Credit_Card();
 		
 		
 
@@ -73,26 +84,24 @@ public class CustomerPlan {
 
 
 
-	public int getPlan_id() {
-		return plan_id;
+	/*
+	 * public Plan getPlan() { return plan; }
+	 * 
+	 * 
+	 * 
+	 * public void setPlan(Plan plan) { this.plan = plan; }
+	 */
+
+
+
+	public User getUser() {
+		return users;
 	}
 
 
 
-	public void setPlan_id(int plan_id) {
-		this.plan_id = plan_id;
-	}
-
-
-
-	public int getUser_id() {
-		return user_id;
-	}
-
-
-
-	public void setUser_id(int user_id) {
-		this.user_id = user_id;
+	public void setUser(User user) {
+		this.users = user;
 	}
 
 
@@ -109,14 +118,14 @@ public class CustomerPlan {
 
 
 
-	public int getAddress_id() {
-		return address_id;
+	public Address getAddress() {
+		return address;
 	}
 
 
 
-	public void setAddress_id(int address_id) {
-		this.address_id = address_id;
+	public void setAddress_id(Address address) {
+		this.address = address;
 	}
 
 
@@ -133,25 +142,46 @@ public class CustomerPlan {
 
 
 
-	public int getCard_id() {
-		return card_id;
+	public  Credit_Card getCard_id() {
+		return credit_card;
 	}
 
 
 
-	public void setCard_id(int card_id) {
-		this.card_id = card_id;
+	public void setCard_id( Credit_Card credit_card) {
+		this.credit_card = credit_card;
+	}
+
+	/**
+	 * @return the customerPlan
+	 */
+	public List<CustomerPlan> getCustomerPlan() {
+		return customerPlan;
+	}
+
+
+
+	/**
+	 * @param customerPlan the customerPlan to set
+	 */
+	public void setCustomerPlan(List<CustomerPlan> customerPlan) {
+		this.customerPlan = customerPlan;
 	}
 
 
 
 	@Override
 	public String toString() {
-		return "CustomerPlan [customer_plan_id=" + customer_plan_id + ", plan_id=" + plan_id + ", user_id=" + user_id
-				+ ", planActivatedDate=" + planActivatedDate + ", active_plan=" + active_plan + ", address_id="
-				+ address_id + ", card_id=" + card_id + "]";
+		return "CustomerPlan [customer_plan_id=" + customer_plan_id + ", customerPlan=" + customerPlan + ", users="
+				+ users + ", planActivatedDate=" + planActivatedDate + ", active_plan=" + active_plan + ", address="
+				+ address + ", card_id=" + credit_card + "]";
 	}
 	
-	
+
+
 
 }
+
+	
+
+
