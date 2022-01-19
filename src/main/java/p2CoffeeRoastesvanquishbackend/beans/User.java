@@ -16,20 +16,20 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table( name= "user")
+@Table(name="person")
 public class User {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-
+    @Column(name="user_id")
 	private int id;
-	@Column 
+	@Column(name="firstname")
 	private String firstName;
-	@Column 
+	@Column(name="lastname")
 	private String lastName;
 	@Column 
 	private String username;
-	@Column 
+	@Column(name="psword")
 	private String password;
 	@Column 
 	private String email;
