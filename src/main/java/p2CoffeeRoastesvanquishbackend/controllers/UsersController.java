@@ -2,20 +2,26 @@ package p2CoffeeRoastesvanquishbackend.controllers;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import p2CoffeeRoastesvanquishbackend.beans.Plan;
 import p2CoffeeRoastesvanquishbackend.beans.User;
 import p2CoffeeRoastesvanquishbackend.exceptions.IncorrectCredentialsException;
 import p2CoffeeRoastesvanquishbackend.exceptions.UsernameAlreadyExistsException;
-import p2CoffeeRoastesvanquishbackend.services.UserService;
+import services.AdminService;
+import services.UserService;
 
 @RestController
 @RequestMapping(path="/users")
@@ -24,6 +30,7 @@ import p2CoffeeRoastesvanquishbackend.services.UserService;
 public class UsersController {
 	
 	private UserService userServ;
+	private AdminService adminServ;
 	
 	@Autowired
 	public UsersController(UserService userServ) {
@@ -56,10 +63,52 @@ public class UsersController {
 			return ResponseEntity.notFound().build();
 		}
 	}
-
-
-
-
 	
+	
+	// POST to /users/createPlan
+	@PostMapping(path="/createPlan")
+	public ResponseEntity<Plan> logIn(@RequestBody Plan newPlan) 
+	{
+		adminServ.addNewPlan(newPlan);
+		return ResponseEntity.status(HttpStatus.CREATED).body(newPlan);
+	}
+	
+	// Get to /users/createPlan
+	@GetMapping(path="/getCustomerPlan/{user_Id}")
+	public ResponseEntity<Set<Plan>> getCustomerPlan(@PathVariable int user_Id) 
+	{
+		Set<Plan> plans= adminServ.getPlansByUserId(user_Id);
+		return ResponseEntity.status(HttpStatus.CREATED).body(plans);
+	}
 
+	@GetMapping(path="/getPlanbyID/{plan_Id}")
+	public ResponseEntity<Plan> getPlanbyID(@PathVariable int plan_Id) 
+	{
+		Plan plan= userServ.getPlanById(plan_Id);
+		return ResponseEntity.status(HttpStatus.CREATED).body(plan);
+	}
+	
+	@DeleteMapping(path="/deletePlanbyID/{plan_Id}")
+	public ResponseEntity<Plan> deletePlanbyID(@PathVariable int plan_Id) 
+	{
+		Plan plan= userServ.getPlanById(plan_Id);
+		adminServ.deleteplan(plan);
+		return ResponseEntity.status(HttpStatus.CREATED).body(plan);
+	}
+	
+	//this path will allow an admin or maybe a user to enable or disable a plan, not sure how to really add this though
+	@PostMapping(path="/toggle/{plan_Id}")
+	public ResponseEntity<Plan> toggle(@PathVariable int plan_Id) 
+	{
+		Plan plan= userServ.getPlanById(plan_Id);
+		//plan.set
+		return ResponseEntity.status(HttpStatus.CREATED).body(plan);
+	}
+	
+	@GetMapping(path="/getActivePlans/{plan_Id}")
+	public ResponseEntity<Set<Plan>> getActivePlans() 
+	{
+		Set<Plan> plans= adminServ.getActivePlans();
+		return ResponseEntity.status(HttpStatus.CREATED).body(plans);
+	}
 }

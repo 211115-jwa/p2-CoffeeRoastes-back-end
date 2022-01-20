@@ -3,13 +3,13 @@ package services;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import p2CoffeeRoastesvanquishbackend.beans.Plan;
+import p2CoffeeRoastesvanquishbackend.beans.User;
 import repositories.PlanRepository;
 import repositories.UserRepository;
 
@@ -51,8 +51,9 @@ public class UserServiceImpl implements UserService
 	}
 	
 	@Override
-	public User getUserById(int id) {
-		return userRepo.findById(id).get();
+	public User getUserById(int id) 
+	{
+		return userRepo.findById(id);
 	}
 	
 	@Override
@@ -60,7 +61,7 @@ public class UserServiceImpl implements UserService
 	public User updateUser(User userToUpdate) {
 		if (userRepo.existsById(userToUpdate.getId())) {
 			userRepo.save(userToUpdate);
-			userToUpdate = userRepo.findById(userToUpdate.getId()).get();
+			userToUpdate = userRepo.findById(userToUpdate.getId());
 			return userToUpdate;
 		}
 		return null;
@@ -70,12 +71,15 @@ public class UserServiceImpl implements UserService
 	@Transactional
 	public User choosePlan(int planId, User user) 
 	{
-		Plan chosenPlan = planRepo.findById(planId).get();
-		if (chosenPlan!=null) {
-			Set<Plan> plans = user.getPlans().add(chosenPlan);
+		//Plan chosenPlan = planRepo.findById(planId).get();
+		Plan plan = planRepo.getById(planId);
+		if (plan!=null) {
+			Set<Plan> plans = user.getPlans();
+			plans.add(planRepo.getById(planId));
+			user.setPlans(plans);
 			
-			planRepo.save(chosenPlan);
-			this.updateUser(user);
+			//planRepo.save(chosenPlan);
+			//this.updateUser(user);
 			//personRepo.save(newOwner);
 			return user;
 		}
@@ -85,5 +89,11 @@ public class UserServiceImpl implements UserService
 	@Override
 	public Set<Plan> viewPlans() {
 		return userRepo.getById(null).getPlans();
+	}
+
+	@Override
+	public Plan getPlanById(int id) 
+	{
+		return planRepo.getById(id);
 	}
 }
