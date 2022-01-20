@@ -1,4 +1,4 @@
-package controllers;
+package p2CoffeeRoastesvanquishbackend.controllers;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,35 +6,37 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.revature.petapp.beans.Person;
-import com.revature.petapp.exceptions.IncorrectCredentialsException;
-import com.revature.petapp.exceptions.UsernameAlreadyExistsException;
-
-import services.UserService;
+import p2CoffeeRoastesvanquishbackend.beans.Address;
+import p2CoffeeRoastesvanquishbackend.beans.User;
+import p2CoffeeRoastesvanquishbackend.exceptions.IncorrectAddressExeption;
+import p2CoffeeRoastesvanquishbackend.exceptions.IncorrectCredentialsException;
+import p2CoffeeRoastesvanquishbackend.exceptions.UsernameAlreadyExistsException;
+import p2CoffeeRoastesvanquishbackend.services.UserService;
 
 @RestController
-@RequestMapping(path="/users")
-@CrossOrigin(origins="http://localhost:4200")
+@RequestMapping(path = "/users")
+@CrossOrigin(origins = "http://localhost:4200")
+
 public class UsersController {
-	private static UserService userServ;
-	
+
+	private UserService userServ;
+
 	@Autowired
 	public UsersController(UserService userServ) {
-		this.userServ=userServ;
+		this.userServ = userServ;
 	}
-	
-	// POST to /users
-	public ResponseEntity<Map<String,Integer>> register(@RequestBody Person newUser) {
+
+	public ResponseEntity<Map<String, Integer>> register(@RequestBody User newUser) {
 		try {
 			newUser = userServ.register(newUser);
 			Map<String, Integer> newIdMap = new HashMap<>();
@@ -44,15 +46,15 @@ public class UsersController {
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
 	}
-	
+
 	// POST to /users/auth
-	@PostMapping(path="/auth")
+	@PostMapping(path = "/auth")
 	public ResponseEntity<String> logIn(@RequestBody Map<String, String> credentials) {
 		String username = credentials.get("username");
 		String password = credentials.get("password");
-		
+
 		try {
-			Person person = userServ.logIn(username, password);
+			User person = userServ.logIn(username, password);
 			String token = Integer.toString(person.getId());
 			return ResponseEntity.ok(token);
 		} catch (IncorrectCredentialsException e) {
@@ -60,40 +62,48 @@ public class UsersController {
 		}
 	}
 	
-	// GET to /users/{userId}/auth
-	@GetMapping(path="/{userId}/auth")
-	public ResponseEntity<Person> checkLogin(@RequestBody String token,
-			@PathVariable int userId) {
-		Person loggedInPerson = userServ.getUserById(userId);
-		if (loggedInPerson!=null) {
-			return ResponseEntity.ok(loggedInPerson);
-		} else {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+	
+	@PostMapping (path = "/address/{id}")
+	public ResponseEntity<Void> addAddress(@RequestBody Address newAddress) {
+		
+		if (newAddress !=null) {
+			userServ.addNewAddress(newAddress);
+			return ResponseEntity.status(HttpStatus.CREATED).build();
 		}
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 	}
 	
-	// GET to /users/{userId}
-	@GetMapping(path="/{userId}")
-	public ResponseEntity<Person> getUserById(@PathVariable int userId) {
-		Person user = userServ.getUserById(userId);
-		if (user != null)
-			return ResponseEntity.ok(user);
-		else
-			return ResponseEntity.notFound().build();
-	}
 	
-	// PUT to /users/{userId}
-	@PutMapping(path="/{userId}")
-	public ResponseEntity<Person> updateUser(@RequestBody Person userToEdit,
-			@PathVariable int userId) {
-		if (userToEdit != null && userToEdit.getId() == userId) {
-			userToEdit = userServ.updateUser(userToEdit);
-			if (userToEdit != null)
-				return ResponseEntity.ok(userToEdit);
-			else
-				return ResponseEntity.notFound().build();
-		} else {
-			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+	
+		@GetMapping(path="/address/{id}")
+		public ResponseEntity<Address> LookUpAddress(@RequestBody String token,
+				@PathVariable int user_id) {
+			Address UserAddressId = userServ.getLookUpAddressByUser(user_id);
+			if (UserAddressId!=null) {
+				return ResponseEntity.ok(UserAddressId);
+			} else {
+				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+			}
+			
+			
 		}
+	
+//option 1
+	 @DeleteMapping(path = "/address/{id}")
+	public ResponseEntity<String> deleteAddress1(@RequestBody Address user_id) throws IncorrectAddressExeption {
+		User user = userServ.deleteAddressById(user_id);
+		String token = Integer.toString(user.getId());
+		return ResponseEntity.ok(token);
+
 	}
+
+//option 2
+	@RequestMapping(path = "/delete/address/{id}", method = RequestMethod.POST)
+	public ResponseEntity<String> deleteAddress(@RequestBody Address user_id) throws IncorrectAddressExeption {
+		User user = userServ.deleteAddressById(user_id);
+		String token = Integer.toString(user.getId());
+		return ResponseEntity.ok(token);
+
+	}
+
 }
