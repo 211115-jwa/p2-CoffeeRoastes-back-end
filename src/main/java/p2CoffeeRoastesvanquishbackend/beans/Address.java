@@ -1,5 +1,7 @@
 package p2CoffeeRoastesvanquishbackend.beans;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,7 +11,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
+@Entity
+@Table( name= "address")
 public class Address 
 {
 	@Id
@@ -19,8 +25,9 @@ public class Address
 	private int address_id;
 	@Column(name="zip")
 	private int zip;
-	@Column(name="user_id")
-	private int user_id;
+	@OneToOne
+	@JoinColumn(name="user_id") 
+	private User user;
 	@Column(name="street_address")
 	private String street_address;
 	@Column(name="city")
@@ -34,11 +41,12 @@ public class Address
 	public Address() {
 		address_id = 1;
 		zip = 1;
-		user_id = 1;
+		user = new User();
 		street_address= "Default Street Address";
 		city= "Default city";
 		state= "Default state";
-		apt= "Default apt";}
+		apt= "Default apt";
+	}
 	
 
 
@@ -62,13 +70,13 @@ public class Address
 	}
 
 
-	public int getUser_id() {
-		return user_id;
+	public User getUser() {
+		return user;
 	}
 
 
-	public void setUser_id(int user_id) {
-		this.user_id = user_id;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 
@@ -109,6 +117,37 @@ public class Address
 
 	public void setApt(String apt) {
 		this.apt = apt;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "Address [address_id=" + address_id + ", zip=" + zip + ", user=" + user + ", street_address="
+				+ street_address + ", city=" + city + ", state=" + state + ", apt=" + apt + "]";
+	}
+
+
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(address_id, apt, city, state, street_address, user, zip);
+	}
+
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Address other = (Address) obj;
+		return address_id == other.address_id && Objects.equals(apt, other.apt) && Objects.equals(city, other.city)
+				&& Objects.equals(state, other.state) && Objects.equals(street_address, other.street_address)
+				&& Objects.equals(user, other.user) && zip == other.zip;
 	}
 
 }

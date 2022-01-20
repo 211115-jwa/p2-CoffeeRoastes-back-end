@@ -2,11 +2,11 @@ package services;
 
 import java.util.Set;
 
-import org.apache.catalina.User;
 
 import Exceptions.IncorrectCredentialsException;
 import Exceptions.UsernameAlreadyExistsException;
 import p2CoffeeRoastesvanquishbackend.beans.Plan;
+import p2CoffeeRoastesvanquishbackend.beans.User;
 
 public interface UserService 
 {
@@ -16,4 +16,6 @@ public interface UserService
 	public User updateUser(User userToUpdate);
 	public User choosePlan(int planId, User user);
 	public Set<Plan> viewPlans();
+	public Plan getPlanById(int id);
+
 }
