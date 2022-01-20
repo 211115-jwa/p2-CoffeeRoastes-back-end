@@ -1,7 +1,8 @@
 package p2CoffeeRoastesvanquishbackend.beans;
 import java.time.LocalDateTime;
-import java.time.LocalTime;  
-
+import java.time.LocalTime;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,45 +13,37 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 
 @Entity
-@Table(name="person")
 public class User {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="user_id")
+
 	private int id;
-	@Column(name="firstname")
 	private String firstName;
-	@Column(name="lastname")
 	private String lastName;
-	@Column 
 	private String username;
-	@Column(name="psword")
 	private String password;
-	@Column 
 	private String email;
-	@Column 
 	private LocalDateTime createdOn;
+	private Set<Plan> plans;
 	@ManyToOne
 	@JoinColumn(name="role_id") 
 	private Role role;
-
+	
 	public User() {
 		id = 0;
 		firstName = "First";
 		lastName = "Last";
 		username = "username";
-		password = "password";
 		email = "johncena@yahoo.com";
 		createdOn = LocalDateTime.now();	// ("dd-MM-yyyy HH:mm:ss");
 		role = new Role();
+		plans= new HashSet<Plan>();
+
 	}
-	
-	
 	public int getId() {
 		return id;
 	}
@@ -100,6 +93,12 @@ public class User {
 		this.role = role;
 	}
 	
+	public Set<Plan> getPlans() {
+		return plans;
+	}
+	public void setPlans(Set<Plan> plans) {
+		this.plans = plans;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
