@@ -23,6 +23,7 @@ import javax.persistence.OneToOne;
 public class CustomerPlan {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name= "customer_plan_id")
 	private int customer_plan_id =1;
 	@ManyToOne
 	@JoinColumn(name="plan_id")
