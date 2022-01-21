@@ -16,8 +16,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
    
 		return null;
 	}
-	public Address findAddressByUserId(String string);
-	public Address create(Address newAddress);
+//	public Address findAddressByUserId(String string);
+//	public Address create(Address newAddress);
 	
 	
 }

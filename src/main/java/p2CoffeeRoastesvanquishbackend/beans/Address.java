@@ -20,7 +20,6 @@ public class Address
 {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	
 	@Column(name="address_id")
 	private int address_id;
 	@Column(name="zip")

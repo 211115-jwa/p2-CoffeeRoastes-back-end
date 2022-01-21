@@ -13,5 +13,5 @@ public interface AdminService {
 	public Set<Plan> getPlansByUserId(int id);
 	public Plan togglePlan(int id);
 	public void deleteplan(Plan plan);
-	public Set<Plan> getActivePlans(); 
+//	public Set<Plan> getActivePlans(); 
 }

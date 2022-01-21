@@ -48,54 +48,56 @@ public class UserServiceImpl implements UserService  {
 	}
 
 
-	//option 1
-	@Override
-	public Address deleteUserAddressById(Address user_id) throws IncorrectAddressExeption {
-		
-		Address DeleteUserAddressFromDatabase  = userRepo.findAddressByUserId(" 11006 SE 68TH ST APT 303");
-		if(DeleteUserAddressFromDatabase != null) {
-			return DeleteUserAddressFromDatabase;
-		
-		}else {
-			
-			throw new IncorrectAddressExeption();
-		}
-		
-	}
+//	//option 1
+//	@Override
+//	public Address deleteUserAddressById(Address user_id) throws IncorrectAddressExeption {
+//		
+//		Address DeleteUserAddressFromDatabase  = userRepo.findAddressByUserId(" 11006 SE 68TH ST APT 303");
+//		if(DeleteUserAddressFromDatabase != null) {
+//			return DeleteUserAddressFromDatabase;
+//		
+//		}else {
+//			
+//			throw new IncorrectAddressExeption();
+//		}
+//		
+//	}
 	//option 2
-	@Override 
-	  
-	  public User deleteAddressById(Address user_id) throws IncorrectAddressExeption {
-	  
-	  User DeleteAddressFromDatabase = userRepo.getById(user_id.getAddress_id());
-	  if(DeleteAddressFromDatabase != null) {
-		  
-		  return DeleteAddressFromDatabase;
-	  
-	  }else {
-	  
-	  throw new IncorrectAddressExeption(); }
-	  
-	  }
-	 
-	 
-	
+//	@Override 
+//	  
+//	  public User deleteAddressById(Address user_id) throws IncorrectAddressExeption {
+//	  
+//	  User DeleteAddressFromDatabase = userRepo.getById(user_id.getAddress_id());
+//	  if(DeleteAddressFromDatabase != null) {
+//		  
+//		  return DeleteAddressFromDatabase;
+//	  
+//	  }else {
+//	  
+//	  throw new IncorrectAddressExeption(); }
+//	  
+//	  }
+//	 
+//	 
+//	
+//
+//	@Override
+//	public Address addNewAddress(Address newAddress) {
+//		return newAddress;
+//		// there is no create for User. Create an Address Repo
+////		return userRepo.create(newAddress);
+//		
+//	}
 
-	@Override
-	public Address addNewAddress(Address newAddress) {
-		return userRepo.create(newAddress);
-		
-	}
 
-
-	@Override
-	public Address getLookUpAddressByUser(int user_id) {
-	Address UserByAddress = userRepo.findAddressByUserId("User Address exist");
-	  if(UserByAddress != null ){
-		userRepo.findById(user_id);
-		 }
-	return UserByAddress;
-	}
+//	@Override
+//	public Address getLookUpAddressByUser(int user_id) {
+//	Address UserByAddress = userRepo.findAddressByUserId("User Address exist");
+//	  if(UserByAddress != null ){
+//		userRepo.findById(user_id);
+//		 }
+//	return UserByAddress;
+//	}
 
 	
 	

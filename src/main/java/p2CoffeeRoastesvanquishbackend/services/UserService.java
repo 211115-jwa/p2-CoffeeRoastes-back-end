@@ -11,10 +11,10 @@ public interface UserService {
 	//option 1
 	public User logIn(String username, String password) throws IncorrectCredentialsException;
 	//option 2
-	public Address deleteUserAddressById(Address user_id) throws IncorrectAddressExeption;
-	public User deleteAddressById(Address user_id) throws IncorrectAddressExeption;
-	public Address addNewAddress(Address newAddress);
-	public Address getLookUpAddressByUser(int user_id);
-	
+//	public Address deleteUserAddressById(Address user_id) throws IncorrectAddressExeption;
+//	public User deleteAddressById(Address user_id) throws IncorrectAddressExeption;
+//	public Address addNewAddress(Address newAddress);
+//	public Address getLookUpAddressByUser(int user_id);
+//	
 
 }
