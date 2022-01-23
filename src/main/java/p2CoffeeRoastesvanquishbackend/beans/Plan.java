@@ -15,77 +15,78 @@ import javax.persistence.Table;
 public class Plan {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int plan_Id;
-	@Column
-	private String coffee_preference;
-	@Column
-	private String coffee_type;
-	@Column
-	private String coffee_quantity;
-	@Column
-	private String coffee_grind;
-	@Column
-	private String delivery_frenquency ;
-	@Column
+	private int plan_id;
+	@Column(name = "coffee_preference")
+	private String preference;
+	@Column(name = "coffee_type")
+	private String type;
+	@Column(name = "coffee_quantity")
+	private String quantity;
+	@Column(name = "coffee_grind")
+	private String grind;
+	@Column(name = "delivery_frequency")
+	private String frequency ;
+	@Column(name = "price")
 	private double price;
 
 	public Plan() {
 
-		plan_Id = 1;
-		coffee_type = " ";
-		coffee_quantity = " ";
-		coffee_grind = "";
-		delivery_frenquency = "";
+		plan_id = 1;
+		preference = "";
+		type = "";
+		quantity = " ";
+		grind = "";
+		frequency = "";
 		price = 12.22;
 
 	}
 
-	public int getplan_Id() {
-		return plan_Id;
+	public int getPlan_id() {
+		return plan_id;
 	}
 
-	public void setplan_Id(int plan_Id) {
-		this.plan_Id = plan_Id;
+	public void setPlan_id(int plan_id) {
+		this.plan_id = plan_id;
 	}
 
-	public String getCoffee_preference() {
-		return coffee_preference;
+	public String getPreference() {
+		return preference;
 	}
 
-	public void setCoffee_preference(String coffee_preference) {
-		this.coffee_preference = coffee_preference;
+	public void setPreference(String preference) {
+		this.preference = preference;
 	}
 
-	public String getCoffee_Type() {
-		return coffee_type;
+	public String getType() {
+		return type;
 	}
 
-	public void setCoffee_Type(String coffee_type) {
-		this.coffee_type = coffee_type;
+	public void setType(String type) {
+		this.type = type;
 	}
 
-	public String getCoffee_quantity() {
-		return coffee_quantity;
+	public String getQuantity() {
+		return quantity;
 	}
 
-	public void setCoffee_quantity(String coffee_quantity) {
-		this.coffee_quantity = coffee_quantity;
+	public void setQuantity(String quantity) {
+		this.quantity = quantity;
 	}
 
-	public String getCoffee_grind() {
-		return coffee_grind;
+	public String getGrind() {
+		return grind;
 	}
 
-	public void setCoffee_grind(String coffee_grind) {
-		this.coffee_grind = coffee_grind;
+	public void setGrind(String grind) {
+		this.grind = grind;
 	}
 
-	public String getDelivery_frenquency() {
-		return delivery_frenquency;
+	public String getFrequency() {
+		return frequency;
 	}
 
-	public void setDelivery_frenquency(String delivery_frenquency) {
-		this.delivery_frenquency = delivery_frenquency;
+	public void setFrequency(String frequency) {
+		this.frequency = frequency;
 	}
 
 	public double getPrice() {
@@ -98,15 +99,13 @@ public class Plan {
 
 	@Override
 	public String toString() {
-		return "Plan [plan_Id=" + plan_Id + ", coffee_preference=" + coffee_preference + ", coffee_Type=" + coffee_type
-				+ ", coffee_quantity=" + coffee_quantity + ", coffee_grind=" + coffee_grind + ", delivery_frenquency="
-				+ delivery_frenquency + ", price=" + price + "]";
+		return "Plan [plan_id=" + plan_id + ", preference=" + preference + ", type=" + type + ", quantity=" + quantity
+				+ ", grind=" + grind + ", frenquency=" + frequency + ", price=" + price + "]";
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(coffee_grind, coffee_preference, coffee_quantity, coffee_type, delivery_frenquency, plan_Id,
-				price);
+		return Objects.hash(frequency, grind, plan_id, preference, price, quantity, type);
 	}
 
 	@Override
@@ -118,12 +117,14 @@ public class Plan {
 		if (getClass() != obj.getClass())
 			return false;
 		Plan other = (Plan) obj;
-		return Objects.equals(coffee_grind, other.coffee_grind)
-				&& Objects.equals(coffee_preference, other.coffee_preference)
-				&& Objects.equals(coffee_quantity, other.coffee_quantity)
-				&& Objects.equals(coffee_type, other.coffee_type)
-				&& Objects.equals(delivery_frenquency, other.delivery_frenquency) && plan_Id == other.plan_Id
-				&& Double.doubleToLongBits(price) == Double.doubleToLongBits(other.price);
+		return Objects.equals(frequency, other.frequency) && Objects.equals(grind, other.grind)
+				&& plan_id == other.plan_id && Objects.equals(preference, other.preference)
+				&& Double.doubleToLongBits(price) == Double.doubleToLongBits(other.price)
+				&& Objects.equals(quantity, other.quantity) && Objects.equals(type, other.type);
 	}
+
+
+
+
 
 }

@@ -2,6 +2,7 @@ package p2CoffeeRoastesvanquishbackend.controllers;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,15 +70,36 @@ public class UsersController {
 			return ResponseEntity.notFound().build();
 		}
 	}
+	@PostMapping(path="/getplan")
+	public ResponseEntity<Plan> getPlan(@RequestBody Map<String, String> input) {
+		String preference = input.get("preference");
+		String type = input.get("type");
+		String quantity = input.get("quantity");
+		String grind = input.get("grind");
+		String frequency= input.get("frequency");
+		
+		try {
+			Plan plan = userServ.getPlan(preference, type, quantity, grind, frequency);
+//			String token = Integer.toString(person.getId());
+			return ResponseEntity.ok(plan);
+		} 
+		finally {
+
+		}
+//		catch (IncorrectCredentialsException e) {
+//			return ResponseEntity.notFound().build();
+//		}
+	}
 	
 	
-	// POST to /users/createPlan
+
 	@PostMapping(path="/createPlan")
 	public ResponseEntity<CustomerPlan> logIn(@RequestBody CustomerPlan newPlan) 
 	{
 		userServ.CreateNewPlan(newPlan);
 		return ResponseEntity.status(HttpStatus.CREATED).body(newPlan);
 	}
+
 	
 	// Get to /users/getCustomerPlans
 	@GetMapping(path="/getCustomerPlans/{user_Id}")
