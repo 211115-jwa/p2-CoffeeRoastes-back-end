@@ -38,10 +38,10 @@ public class AdminServiceImpl implements AdminService
 	@Override
 	@Transactional
 	public Plan editPlan(Plan planToEdit) {
-		Plan planFromDatabase = Planrepo.findById(planToEdit.getplan_Id()).get();
+		Plan planFromDatabase = Planrepo.findById(planToEdit.getPlan_id()).get();
 		if (planFromDatabase != null) {
 			Planrepo.save(planToEdit);
-			return Planrepo.findById(planToEdit.getplan_Id()).get();
+			return Planrepo.findById(planToEdit.getPlan_id()).get();
 		}
 		return null;
 	}
