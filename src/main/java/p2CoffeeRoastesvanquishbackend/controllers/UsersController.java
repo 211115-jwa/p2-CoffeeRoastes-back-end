@@ -13,17 +13,20 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import p2CoffeeRoastesvanquishbackend.beans.Address;
+import p2CoffeeRoastesvanquishbackend.beans.CustomerPlan;
 import p2CoffeeRoastesvanquishbackend.beans.Plan;
 import p2CoffeeRoastesvanquishbackend.beans.User;
 import p2CoffeeRoastesvanquishbackend.exceptions.IncorrectAddressExeption;
 import p2CoffeeRoastesvanquishbackend.exceptions.IncorrectCredentialsException;
 import p2CoffeeRoastesvanquishbackend.exceptions.UsernameAlreadyExistsException;
+import p2CoffeeRoastesvanquishbackend.exceptions.customerplandoesnotexist;
 import p2CoffeeRoastesvanquishbackend.services.AdminService;
 import p2CoffeeRoastesvanquishbackend.services.UserService;
 
@@ -89,22 +92,56 @@ public class UsersController {
 	}
 	
 	
-	// POST to /users/createPlan
-//	@PostMapping(path="/createPlan")
-//	public ResponseEntity<Plan> logIn(@RequestBody Plan newPlan) 
-//	{
-//		adminServ.addNewPlan(newPlan);
-//		return ResponseEntity.status(HttpStatus.CREATED).body(newPlan);
-//	}
+
+	@PostMapping(path="/createPlan")
+	public ResponseEntity<CustomerPlan> logIn(@RequestBody CustomerPlan newPlan) 
+	{
+		userServ.CreateNewPlan(newPlan);
+		return ResponseEntity.status(HttpStatus.CREATED).body(newPlan);
+	}
+
 	
-	// Get to /users/createPlan
-	@GetMapping(path="/getCustomerPlan/{user_Id}")
+	// Get to /users/getCustomerPlans
+	@GetMapping(path="/getCustomerPlans/{user_Id}")
 	public ResponseEntity<Set<Plan>> getCustomerPlan(@PathVariable int user_Id) 
 	{
 		Set<Plan> plans= adminServ.getPlansByUserId(user_Id);
 		return ResponseEntity.status(HttpStatus.CREATED).body(plans);
 	}
-
+	
+	// Get to /users/getcustomerPlanbyID
+	@GetMapping(path="/getcustomerPlanbyID/{customer_plan_id}")
+	public ResponseEntity<CustomerPlan> getPlanbyID(@PathVariable int customer_plan_id) throws customerplandoesnotexist 
+	{
+		CustomerPlan customerplan= userServ.getcustomerPlanbyID(customer_plan_id);
+		return ResponseEntity.status(HttpStatus.CREATED).body(customerplan);
+	}
+	
+	// Delete to /users/deletePlanbyID
+	@DeleteMapping(path="/deletePlanbyID/{customer_plan_id}")
+	public ResponseEntity<Integer> deletePlanbyID(@PathVariable int customer_plan_id) throws customerplandoesnotexist 
+	{
+		userServ.deletecustomerPlanbyID(customer_plan_id);
+		return ResponseEntity.status(HttpStatus.CREATED).body(customer_plan_id);
+	}
+	
+	// Put to /users/togglecustomerplan
+	@PutMapping(path="/togglecustomerplan/{customer_plan_id}")
+	public ResponseEntity<CustomerPlan> togglecustomerplan(@PathVariable int customer_plan_id) throws customerplandoesnotexist 
+	{
+		CustomerPlan customerplan= userServ.toggle(customer_plan_id);
+		return ResponseEntity.status(HttpStatus.CREATED).body(customerplan);
+	}
+	
+	// Get to /users/getallactiveplans
+	@GetMapping(path="/getallactiveplans/{user_id}")
+	public ResponseEntity<Set<CustomerPlan>> getallactiveplans(@PathVariable int user_id)
+	{
+		Set<CustomerPlan> activecustomerplans= userServ.getallactiveplans(user_id);
+		return ResponseEntity.status(HttpStatus.CREATED).body(activecustomerplans);
+	}
+	
+	
 //	@GetMapping(path="/getPlanbyID/{plan_Id}")
 //	public ResponseEntity<Plan> getPlanbyID(@PathVariable int plan_Id) 
 //	{
