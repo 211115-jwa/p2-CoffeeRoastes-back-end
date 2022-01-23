@@ -1,25 +1,33 @@
 package p2CoffeeRoastesvanquishbackend.services;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import p2CoffeeRoastesvanquishbackend.beans.Address;
+import p2CoffeeRoastesvanquishbackend.beans.CustomerPlan;
 import p2CoffeeRoastesvanquishbackend.beans.User;
+import p2CoffeeRoastesvanquishbackend.data.CustomerPlanRepository;
 import p2CoffeeRoastesvanquishbackend.data.UserRepository;
 import p2CoffeeRoastesvanquishbackend.exceptions.IncorrectAddressExeption;
 import p2CoffeeRoastesvanquishbackend.exceptions.IncorrectCredentialsException;
 import p2CoffeeRoastesvanquishbackend.exceptions.UsernameAlreadyExistsException;
+import p2CoffeeRoastesvanquishbackend.exceptions.customerplandoesnotexist;
 
 
 @Service
 public class UserServiceImpl implements UserService  {
 	private UserRepository userRepo;
+	private CustomerPlanRepository Customerplanrepo;
 	
 	
 	@Autowired
-	public UserServiceImpl(UserRepository userRepo) {
+	public UserServiceImpl(UserRepository userRepo, CustomerPlanRepository Customerplanrepo) {
 		this.userRepo = userRepo;
+		this.Customerplanrepo = Customerplanrepo;
 	}
 	
 
@@ -44,10 +52,69 @@ public class UserServiceImpl implements UserService  {
 			}else {
 				throw new IncorrectCredentialsException();
 			}
-		
+	}
+	
+	@Override
+	public CustomerPlan getcustomerPlanbyID(int customerplanID) throws customerplandoesnotexist
+	{
+			CustomerPlan customerplan = Customerplanrepo.getById(customerplanID);
+			if (customerplan != null) {
+				return customerplan;
+			}else {
+				throw new customerplandoesnotexist();
+			}
+	}
+	
+	@Override
+	public CustomerPlan deletecustomerPlanbyID(int customerplanID) throws customerplandoesnotexist
+	{
+			CustomerPlan customerplan = Customerplanrepo.getById(customerplanID);
+			Customerplanrepo.delete(customerplan);
+			if (customerplan != null) {
+				return customerplan;
+			}else {
+				throw new customerplandoesnotexist();
+			}
 	}
 
-
+	@Override
+	public CustomerPlan CreateNewPlan(CustomerPlan customerplan)
+	{
+		Customerplanrepo.save(customerplan);
+		return customerplan;
+	}
+	
+	@Override
+	public CustomerPlan toggle(int customerplanID)
+	{
+		CustomerPlan targetcustomerplan = Customerplanrepo.getById(customerplanID);
+		
+		if(targetcustomerplan.getActive_plan().equals("True"))
+		{
+			targetcustomerplan.setActive_plan("False");
+		}
+		else
+		{
+			targetcustomerplan.setActive_plan("True");
+		}
+		return targetcustomerplan;
+	}
+	
+	@Override
+	public Set<CustomerPlan> getallactiveplans(int user_id)
+	{
+		Set<CustomerPlan> customerplans = new HashSet<CustomerPlan>(); 
+		for(int i=0; i<Customerplanrepo.count(); i++)
+		{
+			if(Customerplanrepo.getOne(i).getUser().getId()==user_id && Customerplanrepo.getOne(i).getActive_plan()=="True")
+			{
+				customerplans.add(Customerplanrepo.getOne(i));
+			}
+		}
+		return customerplans;
+	}
+	
+	
 //	//option 1
 //	@Override
 //	public Address deleteUserAddressById(Address user_id) throws IncorrectAddressExeption {
