@@ -16,14 +16,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+//import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import p2CoffeeRoastesvanquishbackend.beans.Address;
+//import p2CoffeeRoastesvanquishbackend.beans.Address;
 import p2CoffeeRoastesvanquishbackend.beans.CustomerPlan;
 import p2CoffeeRoastesvanquishbackend.beans.Plan;
 import p2CoffeeRoastesvanquishbackend.beans.User;
-import p2CoffeeRoastesvanquishbackend.exceptions.IncorrectAddressExeption;
+//import p2CoffeeRoastesvanquishbackend.exceptions.IncorrectAddressExeption;
 import p2CoffeeRoastesvanquishbackend.exceptions.IncorrectCredentialsException;
 import p2CoffeeRoastesvanquishbackend.exceptions.UsernameAlreadyExistsException;
 import p2CoffeeRoastesvanquishbackend.exceptions.customerplandoesnotexist;
@@ -167,48 +167,37 @@ public class UsersController {
 //	}
 	
 	
-//	@PostMapping (path = "/address/{id}")
-//	public ResponseEntity<Void> addAddress(@RequestBody Address newAddress) {
-//		
-//		if (newAddress !=null) {
-//			userServ.addNewAddress(newAddress);
-//			return ResponseEntity.status(HttpStatus.CREATED).build();
-//		}
-//		return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-//	}
-	
-	
-	
-//		@GetMapping(path="/address/{id}")
-//		public ResponseEntity<Address> LookUpAddress(@RequestBody String token,
-//				@PathVariable int user_id) {
-//			Address UserAddressId = userServ.getLookUpAddressByUser(user_id);
-//			if (UserAddressId!=null) {
-//				return ResponseEntity.ok(UserAddressId);
-//			} else {
-//				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-//			}
-//			
-//			
-//		}
-//	
-//option 1
-//	 @DeleteMapping(path = "/address/{id}")
-//	public ResponseEntity<String> deleteAddress1(@RequestBody Address user_id) throws IncorrectAddressExeption {
-//		User user = userServ.deleteAddressById(user_id);
-//		String token = Integer.toString(user.getId());
-//		return ResponseEntity.ok(token);
-//
-//	}
-//
-////option 2
-//	@RequestMapping(path = "/delete/address/{id}", method = RequestMethod.POST)
-//	public ResponseEntity<String> deleteAddress(@RequestBody Address user_id) throws IncorrectAddressExeption {
-//		User user = userServ.deleteAddressById(user_id);
-//		String token = Integer.toString(user.getId());
-//		return ResponseEntity.ok(token);
-//
-//	}
+	/*
+	 * @PostMapping (path = "/address/{id}") public ResponseEntity<Void>
+	 * addAddress(@RequestBody Address newAddress){
+	 * 
+	 * if (newAddress !=null) { userServ.addNewAddress(newAddress); return
+	 * ResponseEntity.status(HttpStatus.CREATED).build(); } return
+	 * ResponseEntity.status(HttpStatus.BAD_REQUEST).build(); }
+	 * 
+	 * 
+	 * 
+	 * @GetMapping(path="/address/{id}") public ResponseEntity<Address>
+	 * LookUpAddress(@RequestBody String token,
+	 * 
+	 * @PathVariable int user_id) { Address UserAddressId =
+	 * userServ.getLookUpAddressByUser(user_id); if (UserAddressId!=null) { return
+	 * ResponseEntity.ok(UserAddressId); } else { return
+	 * ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); }
+	 * 
+	 * 
+	 * }
+	 * 
+	 * 
+	 * @DeleteMapping(path = "/address/{id}") public ResponseEntity<String>
+	 * deleteAddress(@RequestBody Address id) throws IncorrectAddressExeption {
+	 * Address addressDeletedId = userServ.deleteAddressById(id); String token =
+	 * Integer.toString(addressDeletedId.getAddress_id()); return
+	 * ResponseEntity.ok(token);
+	 * 
+	 * }
+	 */
+
 //	
 //	@GetMapping(path="/getActivePlans/{plan_Id}")
 //	public ResponseEntity<Set<Plan>> getActivePlans() 
