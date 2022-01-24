@@ -4,7 +4,7 @@ package p2CoffeeRoastesvanquishbackend.services;
 
 
 import java.util.HashSet;
-
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -141,6 +141,27 @@ public class UserServiceImpl implements UserService  {
 			}
 		}
 		return customerplans;
+	}
+
+
+	@Override
+	public User getUserById(int id) {
+		Optional<User> user = Optional.ofNullable(userRepo.findById(id));
+		if (user.isPresent()) return user.get();
+		else return null;
+
+	}
+
+
+	@Override
+	public User updateUser(User userToUpdate) {
+		if (userRepo.existsById(userToUpdate.getId())) {
+			userRepo.save(userToUpdate);
+			userToUpdate = userRepo.findById(userToUpdate.getId());
+			return userToUpdate;
+		}
+		return null;
+
 	}
 	
 
