@@ -24,7 +24,6 @@ import p2CoffeeRoastesvanquishbackend.services.AddressService;
 @CrossOrigin(origins="http://localhost:4200")
 
 
-
 public class AddressController {
 	
 	
@@ -44,15 +43,15 @@ public class AddressController {
 	 
 	
 	
-	@PostMapping (path = "/address/{id}")
-	public ResponseEntity<Void> addAddress(@RequestBody Address newAddress){
-		
-		if (newAddress !=null) {
-			addressService.addNewAddress(newAddress);
-			return ResponseEntity.status(HttpStatus.CREATED).build();
-	}
-	return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-	}
+//	@PostMapping (path = "/address/{id}")
+//	public ResponseEntity<Void> addAddress(@RequestBody Address newAddress){
+//		
+//		if (newAddress !=null) {
+//			addressService.addNewAddress(newAddress);
+//			return ResponseEntity.status(HttpStatus.CREATED).build();
+//	}
+//	return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+//	}
 	
 	
 	
@@ -71,7 +70,7 @@ public class AddressController {
 	
 
 	 @DeleteMapping(path = "/address/{id}")
-	public ResponseEntity<String> deleteAddress(@RequestBody Address id) throws IncorrectAddressExeption {
+	public ResponseEntity<String> deleteAddress(@RequestBody int id) throws IncorrectAddressExeption {
 		Address addressDeletedId = addressService.deleteAddressById(id);
 		String token = Integer.toString(addressDeletedId.getAddress_id());
 		return ResponseEntity.ok(token);
