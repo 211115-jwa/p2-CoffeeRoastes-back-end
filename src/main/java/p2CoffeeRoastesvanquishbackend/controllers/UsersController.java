@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 //import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import p2CoffeeRoastesvanquishbackend.annotations.Authenticate;
 //import p2CoffeeRoastesvanquishbackend.beans.Address;
 import p2CoffeeRoastesvanquishbackend.beans.CustomerPlan;
 import p2CoffeeRoastesvanquishbackend.beans.Plan;
@@ -90,6 +91,48 @@ public class UsersController {
 //			return ResponseEntity.notFound().build();
 //		}
 	}
+	
+	// GET to /users/{userId}/auth
+	@GetMapping(path="/{userId}/auth")
+	public ResponseEntity<User> checkLogin(@PathVariable int userId) {
+		User loggedInPerson = userServ.getUserById(userId);
+		if (loggedInPerson!=null) {
+			return ResponseEntity.ok(loggedInPerson);
+		} else {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+	}
+	
+	// GET to /users/{userId}
+	@GetMapping(path="/{userId}")
+	public ResponseEntity<User> getUserById(@PathVariable int userId) {
+		User user = userServ.getUserById(userId);
+		if (user != null)
+			return ResponseEntity.ok(user);
+		else
+			return ResponseEntity.notFound().build();
+	}
+	
+	// PUT to /users/{userId}
+	@Authenticate(requiredRoles={})
+	@PutMapping(path="/{userId}")
+	public ResponseEntity<User> updateUser(@RequestBody User userToEdit,
+			@PathVariable int userId) {
+		if (userToEdit != null && userToEdit.getId() == userId) {
+			userToEdit = userServ.updateUser(userToEdit);
+			if (userToEdit != null)
+				return ResponseEntity.ok(userToEdit);
+			else
+				return ResponseEntity.notFound().build();
+		} else {
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+		}
+	}
+
+	
+
+
+
 	
 	
 
