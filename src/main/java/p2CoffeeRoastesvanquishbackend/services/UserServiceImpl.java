@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import p2CoffeeRoastesvanquishbackend.beans.CreditCard;
 import p2CoffeeRoastesvanquishbackend.beans.User;
 import p2CoffeeRoastesvanquishbackend.data.UserRepository;
 import p2CoffeeRoastesvanquishbackend.exceptions.IncorrectCredentialsException;
@@ -43,6 +44,22 @@ public class UserServiceImpl implements UserService  {
 				throw new IncorrectCredentialsException();
 			}
 		
+	}
+
+
+	@Override
+	@Transactional
+	public int addNewCreditCard(CreditCard newCreditCard) {
+		return creditCardRepo.save(newCreditCard).getCreditCardId();
+	}
+
+	@Override
+	public User getCreditCardByUser(String creditCardUser) {
+		User UserByCreditCard = creditCardRepo.findCreditCardByUserId(user_id);
+		if (UserByCreditCard != null) {
+			return null;
+		}
+		return UserByCreditCard;
 	}
 
 }
