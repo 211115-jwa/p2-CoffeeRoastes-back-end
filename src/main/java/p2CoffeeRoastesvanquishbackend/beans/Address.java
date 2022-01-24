@@ -8,9 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -20,7 +17,6 @@ public class Address
 {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	
 	@Column(name="address_id")
 	private int address_id;
 	@Column(name="zip")
