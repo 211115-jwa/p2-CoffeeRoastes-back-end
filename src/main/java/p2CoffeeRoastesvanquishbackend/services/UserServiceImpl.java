@@ -128,18 +128,19 @@ public class UserServiceImpl implements UserService  {
 		return targetcustomerplan;
 	}
 	
-	@SuppressWarnings("deprecation")
+	//@SuppressWarnings("deprecation")
 	@Override
 	public Set<CustomerPlan> getallactiveplans(int user_id)
 	{
-		Set<CustomerPlan> customerplans = new HashSet<CustomerPlan>(); 
-		for(int i=0; i<Customerplanrepo.count(); i++)
+		Set<CustomerPlan> customerplans = Customerplanrepo.getallactiveplansbyuserid("True", userRepo.findById(user_id));
+		/*for(int i=0; i<Customerplanrepo.count(); i++)
 		{
 			if(Customerplanrepo.getOne(i).getUser().getId()==user_id && Customerplanrepo.getOne(i).getActive_plan()=="True")
 			{
 				customerplans.add(Customerplanrepo.getOne(i));
 			}
-		}
+		}*/
+		
 		return customerplans;
 	}
 
