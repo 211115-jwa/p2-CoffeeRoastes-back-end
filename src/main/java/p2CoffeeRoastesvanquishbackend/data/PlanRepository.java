@@ -18,5 +18,6 @@ public interface PlanRepository extends JpaRepository<Plan, Integer>
 	
 	
 		public Plan findByPreferenceAndTypeAndQuantityAndGrindAndFrequency(String preference, String type, String quantity, String grind, String frequency);
+		
 	
 }
