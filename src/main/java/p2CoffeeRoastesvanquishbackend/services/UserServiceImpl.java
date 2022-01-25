@@ -100,7 +100,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public CustomerPlan toggle(int customerplanID) {
 		CustomerPlan targetcustomerplan = Customerplanrepo.getById(customerplanID);
-<<<<<<< HEAD
 
 		if (targetcustomerplan.getActive_plan().equals("True")) {
 			targetcustomerplan.setActive_plan("False");
@@ -117,7 +116,6 @@ public class UserServiceImpl implements UserService {
 		for (int i = 0; i < Customerplanrepo.count(); i++) {
 			if (Customerplanrepo.getOne(i).getUser().getId() == user_id
 					&& Customerplanrepo.getOne(i).getActive_plan() == "True") {
-=======
 		
 		if(targetcustomerplan.getActive().equals("True"))
 		{
@@ -165,7 +163,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User getCreditCardByUser(String creditCardUser) {
-		User UserByCreditCard = creditCardRepo.findCreditCardByUserId(user_id);
+		User UserByCreditCard = creditCardRepo.findCreditCardByUser(user);
 		if (UserByCreditCard != null) {
 			return null;
 		}

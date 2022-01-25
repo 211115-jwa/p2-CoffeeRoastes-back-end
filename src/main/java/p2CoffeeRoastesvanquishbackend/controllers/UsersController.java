@@ -141,7 +141,7 @@ public class UsersController {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 	}
 
-	@GetMapping(path = "/{UserId}")
+	@GetMapping(path = "/card/{UserId}")
 	public ResponseEntity<User> getCreditCardByUser(@PathVariable String creditCardUser) {
 
 		User creditCard = userServ.getCreditCardByUser(creditCardUser);
