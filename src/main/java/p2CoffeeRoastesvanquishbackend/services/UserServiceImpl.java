@@ -117,13 +117,13 @@ public class UserServiceImpl implements UserService  {
 	{
 		CustomerPlan targetcustomerplan = Customerplanrepo.getById(customerplanID);
 		
-		if(targetcustomerplan.getActive_plan().equals("True"))
+		if(targetcustomerplan.getActive().equals("True"))
 		{
-			targetcustomerplan.setActive_plan("False");
+			targetcustomerplan.setActive("False");
 		}
 		else
 		{
-			targetcustomerplan.setActive_plan("True");
+			targetcustomerplan.setActive("True");
 		}
 		return targetcustomerplan;
 	}
@@ -132,7 +132,7 @@ public class UserServiceImpl implements UserService  {
 	@Override
 	public Set<CustomerPlan> getallactiveplans(int user_id)
 	{
-		Set<CustomerPlan> customerplans = Customerplanrepo.getallactiveplansbyuserid("True", userRepo.findById(user_id));
+		Set<CustomerPlan> customerplans = Customerplanrepo.findByActiveAndUser("True", userRepo.findById(user_id));
 		/*for(int i=0; i<Customerplanrepo.count(); i++)
 		{
 			if(Customerplanrepo.getOne(i).getUser().getId()==user_id && Customerplanrepo.getOne(i).getActive_plan()=="True")

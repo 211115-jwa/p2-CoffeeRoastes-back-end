@@ -13,6 +13,6 @@ import p2CoffeeRoastesvanquishbackend.beans.User;
 @Repository
 public interface CustomerPlanRepository extends JpaRepository<CustomerPlan, Integer> 
 {
-	public Set<CustomerPlan> getallactiveplansbyuserid(String active_plan, User user);
+	public Set<CustomerPlan> findByActiveAndUser(String active_plan, User user);
 
 }
