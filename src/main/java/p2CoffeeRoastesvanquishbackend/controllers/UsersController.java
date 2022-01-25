@@ -9,10 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-<<<<<<< HEAD
-=======
 import org.springframework.web.bind.annotation.DeleteMapping;
->>>>>>> bca2ec446df760b2db99c87f9575e0651f279353
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,14 +20,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 //import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-<<<<<<< HEAD
 import p2CoffeeRoastesvanquishbackend.beans.CreditCard;
-=======
+
 import p2CoffeeRoastesvanquishbackend.annotations.Authenticate;
 //import p2CoffeeRoastesvanquishbackend.beans.Address;
 import p2CoffeeRoastesvanquishbackend.beans.CustomerPlan;
 import p2CoffeeRoastesvanquishbackend.beans.Plan;
->>>>>>> bca2ec446df760b2db99c87f9575e0651f279353
+
 import p2CoffeeRoastesvanquishbackend.beans.User;
 //import p2CoffeeRoastesvanquishbackend.exceptions.IncorrectAddressExeption;
 import p2CoffeeRoastesvanquishbackend.exceptions.IncorrectCredentialsException;
@@ -45,12 +42,8 @@ import p2CoffeeRoastesvanquishbackend.services.UserService;
 public class UsersController {
 
 	private UserService userServ;
-<<<<<<< HEAD
-
-=======
 	private AdminService adminServ;
-	
->>>>>>> bca2ec446df760b2db99c87f9575e0651f279353
+
 	@Autowired
 	public UsersController(UserService userServ) {
 		this.userServ = userServ;
@@ -81,40 +74,40 @@ public class UsersController {
 			return ResponseEntity.notFound().build();
 		}
 	}
-	@PostMapping(path="/getplan")
+
+	@PostMapping(path = "/getplan")
 	public ResponseEntity<Plan> getPlan(@RequestBody Map<String, String> input) {
 		String preference = input.get("preference");
 		String type = input.get("type");
 		String quantity = input.get("quantity");
 		String grind = input.get("grind");
-		String frequency= input.get("frequency");
-		
+		String frequency = input.get("frequency");
+
 		try {
 			Plan plan = userServ.getPlan(preference, type, quantity, grind, frequency);
 //			String token = Integer.toString(person.getId());
 			return ResponseEntity.ok(plan);
-		} 
-		finally {
+		} finally {
 
 		}
 //		catch (IncorrectCredentialsException e) {
 //			return ResponseEntity.notFound().build();
 //		}
 	}
-	
+
 	// GET to /users/{userId}/auth
-	@GetMapping(path="/{userId}/auth")
+	@GetMapping(path = "/{userId}/auth")
 	public ResponseEntity<User> checkLogin(@PathVariable int userId) {
 		User loggedInPerson = userServ.getUserById(userId);
-		if (loggedInPerson!=null) {
+		if (loggedInPerson != null) {
 			return ResponseEntity.ok(loggedInPerson);
 		} else {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
 	}
-	
+
 	// GET to /users/{userId}
-	@GetMapping(path="/{userId}")
+	@GetMapping(path = "/{userId}")
 	public ResponseEntity<User> getUserById(@PathVariable int userId) {
 		User user = userServ.getUserById(userId);
 		if (user != null)
@@ -122,12 +115,11 @@ public class UsersController {
 		else
 			return ResponseEntity.notFound().build();
 	}
-	
+
 	// PUT to /users/{userId}
-	@Authenticate(requiredRoles={})
-	@PutMapping(path="/{userId}")
-	public ResponseEntity<User> updateUser(@RequestBody User userToEdit,
-			@PathVariable int userId) {
+	@Authenticate(requiredRoles = {})
+	@PutMapping(path = "/{userId}")
+	public ResponseEntity<User> updateUser(@RequestBody User userToEdit, @PathVariable int userId) {
 		if (userToEdit != null && userToEdit.getId() == userId) {
 			userToEdit = userServ.updateUser(userToEdit);
 			if (userToEdit != null)
@@ -139,8 +131,6 @@ public class UsersController {
 		}
 	}
 
-	
-
 	@PostMapping(path = "/card")
 	public ResponseEntity<Void> addCreditCard(@RequestBody CreditCard newCreditCard) {
 
@@ -151,7 +141,6 @@ public class UsersController {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 	}
 
-<<<<<<< HEAD
 	@GetMapping(path = "/{UserId}")
 	public ResponseEntity<User> getCreditCardByUser(@PathVariable String creditCardUser) {
 
@@ -161,59 +150,50 @@ public class UsersController {
 		else
 			return ResponseEntity.notFound().build();
 	}
-=======
-	
-	
 
-	@PostMapping(path="/createPlan")
-	public ResponseEntity<CustomerPlan> logIn(@RequestBody CustomerPlan newPlan) 
-	{
+	@PostMapping(path = "/createPlan")
+	public ResponseEntity<CustomerPlan> logIn(@RequestBody CustomerPlan newPlan) {
 		userServ.CreateNewPlan(newPlan);
 		return ResponseEntity.status(HttpStatus.CREATED).body(newPlan);
 	}
 
-	
 	// Get to /users/getCustomerPlans
-	@GetMapping(path="/getCustomerPlans/{user_Id}")
-	public ResponseEntity<Set<Plan>> getCustomerPlan(@PathVariable int user_Id) 
-	{
-		Set<Plan> plans= adminServ.getPlansByUserId(user_Id);
+	@GetMapping(path = "/getCustomerPlans/{user_Id}")
+	public ResponseEntity<Set<Plan>> getCustomerPlan(@PathVariable int user_Id) {
+		Set<Plan> plans = adminServ.getPlansByUserId(user_Id);
 		return ResponseEntity.status(HttpStatus.CREATED).body(plans);
 	}
-	
+
 	// Get to /users/getcustomerPlanbyID
-	@GetMapping(path="/getcustomerPlanbyID/{customer_plan_id}")
-	public ResponseEntity<CustomerPlan> getPlanbyID(@PathVariable int customer_plan_id) throws customerplandoesnotexist 
-	{
-		CustomerPlan customerplan= userServ.getcustomerPlanbyID(customer_plan_id);
+	@GetMapping(path = "/getcustomerPlanbyID/{customer_plan_id}")
+	public ResponseEntity<CustomerPlan> getPlanbyID(@PathVariable int customer_plan_id)
+			throws customerplandoesnotexist {
+		CustomerPlan customerplan = userServ.getcustomerPlanbyID(customer_plan_id);
 		return ResponseEntity.status(HttpStatus.CREATED).body(customerplan);
 	}
-	
+
 	// Delete to /users/deletePlanbyID
-	@DeleteMapping(path="/deletePlanbyID/{customer_plan_id}")
-	public ResponseEntity<Integer> deletePlanbyID(@PathVariable int customer_plan_id) throws customerplandoesnotexist 
-	{
+	@DeleteMapping(path = "/deletePlanbyID/{customer_plan_id}")
+	public ResponseEntity<Integer> deletePlanbyID(@PathVariable int customer_plan_id) throws customerplandoesnotexist {
 		userServ.deletecustomerPlanbyID(customer_plan_id);
 		return ResponseEntity.status(HttpStatus.CREATED).body(customer_plan_id);
 	}
-	
+
 	// Put to /users/togglecustomerplan
-	@PutMapping(path="/togglecustomerplan/{customer_plan_id}")
-	public ResponseEntity<CustomerPlan> togglecustomerplan(@PathVariable int customer_plan_id) throws customerplandoesnotexist 
-	{
-		CustomerPlan customerplan= userServ.toggle(customer_plan_id);
+	@PutMapping(path = "/togglecustomerplan/{customer_plan_id}")
+	public ResponseEntity<CustomerPlan> togglecustomerplan(@PathVariable int customer_plan_id)
+			throws customerplandoesnotexist {
+		CustomerPlan customerplan = userServ.toggle(customer_plan_id);
 		return ResponseEntity.status(HttpStatus.CREATED).body(customerplan);
 	}
-	
+
 	// Get to /users/getallactiveplans
-	@GetMapping(path="/getallactiveplans/{user_id}")
-	public ResponseEntity<Set<CustomerPlan>> getallactiveplans(@PathVariable int user_id)
-	{
-		Set<CustomerPlan> activecustomerplans= userServ.getallactiveplans(user_id);
+	@GetMapping(path = "/getallactiveplans/{user_id}")
+	public ResponseEntity<Set<CustomerPlan>> getallactiveplans(@PathVariable int user_id) {
+		Set<CustomerPlan> activecustomerplans = userServ.getallactiveplans(user_id);
 		return ResponseEntity.status(HttpStatus.CREATED).body(activecustomerplans);
 	}
-	
-	
+
 //	@GetMapping(path="/getPlanbyID/{plan_Id}")
 //	public ResponseEntity<Plan> getPlanbyID(@PathVariable int plan_Id) 
 //	{
@@ -237,8 +217,7 @@ public class UsersController {
 //		//plan.set
 //		return ResponseEntity.status(HttpStatus.CREATED).body(plan);
 //	}
-	
-	
+
 	/*
 	 * @PostMapping (path = "/address/{id}") public ResponseEntity<Void>
 	 * addAddress(@RequestBody Address newAddress){
@@ -269,7 +248,6 @@ public class UsersController {
 	 * 
 	 * }
 	 */
->>>>>>> bca2ec446df760b2db99c87f9575e0651f279353
 
 //	
 //	@GetMapping(path="/getActivePlans/{plan_Id}")
