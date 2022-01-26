@@ -5,6 +5,8 @@ import java.util.Map;
 
 import java.util.Set;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,10 +48,12 @@ public class UsersController {
 	public UsersController(UserService userServ) {
 		this.userServ=userServ;
 	}
-	
+	private static Logger log = LogManager.getLogger(UsersController.class);
+
 	
 	public ResponseEntity<Map<String,Integer>> register(@RequestBody User newUser) {
 		try {
+			log.info("Registering New User: "+newUser.getUsername());
 			newUser = userServ.register(newUser);
 			Map<String, Integer> newIdMap = new HashMap<>();
 			newIdMap.put("generatedId", newUser.getId());
@@ -62,14 +66,17 @@ public class UsersController {
 	// POST to /users/auth
 	@PostMapping(path="/auth")
 	public ResponseEntity<String> logIn(@RequestBody Map<String, String> credentials) {
+		
 		String username = credentials.get("username");
 		String password = credentials.get("password");
-		
+		log.info("Attmpt to login: "+username+" "+password);
 		try {
 			User person = userServ.logIn(username, password);
 			String token = Integer.toString(person.getId());
+			log.info("Logged In: "+username+" "+password);
 			return ResponseEntity.ok(token);
 		} catch (IncorrectCredentialsException e) {
+			log.info("Failure to log In: "+username+" "+password);
 			return ResponseEntity.notFound().build();
 		}
 	}
@@ -81,9 +88,12 @@ public class UsersController {
 		String grind = input.get("grind");
 		String frequency= input.get("frequency");
 		
+		log.info("Attempt to Get Plan:"+preference+" "+type+" "+quantity+" "+grind+" "+frequency);
+
 		try {
 			Plan plan = userServ.getPlan(preference, type, quantity, grind, frequency);
 //			String token = Integer.toString(person.getId());
+			log.info("Sucsessfully got Plan:"+preference+" "+type+" "+quantity+" "+grind+" "+frequency);
 			return ResponseEntity.ok(plan);
 		} 
 		finally {
