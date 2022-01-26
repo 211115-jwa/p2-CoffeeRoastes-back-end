@@ -97,26 +97,18 @@ public class CustomerPlan {
 	}
 
 
-
 	public void setAddress(Address address) {
 		this.address = address;
 	}
-
-
-
-
-
-
 
 	public CreditCard getCard() {
 		return credit_card;
 	}
 
 
+	public void setCard(CreditCard credit_card) {
+		this.credit_card = credit_card;
 
-	public void setCard_(CreditCard card) {
-		this.credit_card = card;
-	}
 
 	
 	public Plan getCustomerPlan() {
@@ -138,7 +130,6 @@ public class CustomerPlan {
 	public void setActive(String active) {
 		this.active = active;
 	}
-
 
 
 	@Override
