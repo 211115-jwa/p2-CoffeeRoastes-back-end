@@ -24,15 +24,14 @@ public class AddressServiceImpl implements AddressService {
 	// This function is to Add Address where user is
 
 	@Override
-	public int addNewAddress(Address newAddress) {
+	public Address addNewAddress(Address newAddress) {
            
 	    Address addressAdded =  addressRepo.save(newAddress);
 		
-	    if(addressAdded !=null) 
+	    if(addressAdded !=null) {
 	    
-		return addressAdded.getAddress_id();
-		
-		else return 0;
+		return addressAdded;	}
+		else {return null;}
 	}
 
 	
@@ -41,7 +40,7 @@ public class AddressServiceImpl implements AddressService {
 
 	@Override
 	public Address getLookUpAddressByUser(int user_id) {
-		Address UserByAddress = addressRepo.findAddressByUserId("User Address exist");
+		Address UserByAddress = addressRepo.findByUserId(user_id);
 		if (UserByAddress != null) {
 			addressRepo.findById(user_id);
 		}
@@ -51,9 +50,9 @@ public class AddressServiceImpl implements AddressService {
     //  This function is to Delete address by Id
 
 	@Override
-	public Address deleteAddressById(Address id) throws IncorrectAddressExeption {
+	public Address deleteAddressById(int id) throws IncorrectAddressExeption {
 
-		Address DeleteUserAddressFromDatabase = addressRepo.findAddressByUserId(" 11006 SE 68TH ST APT 303");
+		Address DeleteUserAddressFromDatabase =addressRepo.findByUserId(id);
 		if (DeleteUserAddressFromDatabase != null) {
 			return DeleteUserAddressFromDatabase;
 

@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @Table(name = "plan")
 public class Plan {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int plan_id;
 	@Column(name = "coffee_preference")
 	private String preference;

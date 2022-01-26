@@ -23,7 +23,7 @@ import javax.persistence.OneToOne;
 
 public class CustomerPlan {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name= "customer_plan_id")
 	private int customer_plan_id =1;
 	@ManyToOne
@@ -114,8 +114,8 @@ public class CustomerPlan {
 
 
 
-	public void setCard_id(int i) {
-		this.credit_card = i;
+	public void setCard_(CreditCard card) {
+		this.credit_card = card;
 	}
 
 	

@@ -9,8 +9,11 @@ import p2CoffeeRoastesvanquishbackend.beans.Address;
 public interface AddressRepository extends JpaRepository<Address, Integer >{
 	
 	public Address deleteById(int id);
-	public Address addAddressWhereUserIs(Address newAddress);
-	public Address findAddressByUserId(String string);
+//public Address addAddressWhereUserIs(Address newAddress);
+	public Address findByUserId(int id);
+	
+	
+//    Invoice findByCustomerId(long id);
 	
 	
    
