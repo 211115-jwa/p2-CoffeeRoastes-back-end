@@ -2,7 +2,7 @@ package p2CoffeeRoastesvanquishbackend.controllers;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
+
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +24,11 @@ import p2CoffeeRoastesvanquishbackend.annotations.Authenticate;
 import p2CoffeeRoastesvanquishbackend.beans.CustomerPlan;
 import p2CoffeeRoastesvanquishbackend.beans.Plan;
 import p2CoffeeRoastesvanquishbackend.beans.User;
+import p2CoffeeRoastesvanquishbackend.exceptions.CustomerDoesNotExistException;
 //import p2CoffeeRoastesvanquishbackend.exceptions.IncorrectAddressExeption;
 import p2CoffeeRoastesvanquishbackend.exceptions.IncorrectCredentialsException;
 import p2CoffeeRoastesvanquishbackend.exceptions.UsernameAlreadyExistsException;
-import p2CoffeeRoastesvanquishbackend.exceptions.customeralreadyexists;
+
 import p2CoffeeRoastesvanquishbackend.exceptions.customerplandoesnotexist;
 import p2CoffeeRoastesvanquishbackend.services.AdminService;
 import p2CoffeeRoastesvanquishbackend.services.UserService;
@@ -95,7 +96,7 @@ public class UsersController {
 	
 	// GET to /users/{userId}/auth
 	@GetMapping(path="/{userId}/auth")
-	public ResponseEntity<User> checkLogin(@PathVariable int userId) {
+	public ResponseEntity<User> checkLogin(@PathVariable int userId) throws CustomerDoesNotExistException {
 		User loggedInPerson = userServ.getUserById(userId);
 		if (loggedInPerson!=null) {
 			return ResponseEntity.ok(loggedInPerson);
@@ -106,7 +107,7 @@ public class UsersController {
 	
 	// GET to /users/{userId}
 	@GetMapping(path="/{userId}")
-	public ResponseEntity<User> getUserById(@PathVariable int userId) {
+	public ResponseEntity<User> getUserById(@PathVariable int userId) throws CustomerDoesNotExistException {
 		User user = userServ.getUserById(userId);
 		if (user != null)
 			return ResponseEntity.ok(user);
