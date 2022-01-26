@@ -5,11 +5,13 @@ import p2CoffeeRoastesvanquishbackend.exceptions.IncorrectAddressExeption;
 
 public interface AddressService {
 	
-//	public Address addNewAddress(Address newAddress);
+	public int addNewAddress(Address newAddress);
 
 	public Address getLookUpAddressByUser(int user_id);
 	
-	public Address deleteAddressById(int id)throws IncorrectAddressExeption;
+	public Address deleteAddressById(Address id)throws IncorrectAddressExeption;
+
+
 	
 
 	
