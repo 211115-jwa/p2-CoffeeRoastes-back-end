@@ -114,8 +114,8 @@ public class CustomerPlan {
 
 
 
-	public void setCard_id(CreditCard credit_card) {
-		this.credit_card = credit_card;
+	public void setCard_id(int i) {
+		this.credit_card = i;
 	}
 
 	

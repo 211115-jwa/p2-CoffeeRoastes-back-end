@@ -27,6 +27,7 @@ import p2CoffeeRoastesvanquishbackend.beans.User;
 //import p2CoffeeRoastesvanquishbackend.exceptions.IncorrectAddressExeption;
 import p2CoffeeRoastesvanquishbackend.exceptions.IncorrectCredentialsException;
 import p2CoffeeRoastesvanquishbackend.exceptions.UsernameAlreadyExistsException;
+import p2CoffeeRoastesvanquishbackend.exceptions.customeralreadyexists;
 import p2CoffeeRoastesvanquishbackend.exceptions.customerplandoesnotexist;
 import p2CoffeeRoastesvanquishbackend.services.AdminService;
 import p2CoffeeRoastesvanquishbackend.services.UserService;
@@ -128,11 +129,6 @@ public class UsersController {
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
 	}
-
-	
-
-
-
 	
 	
 
@@ -184,6 +180,14 @@ public class UsersController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(activecustomerplans);
 	}
 	
+	
+	// Post to /createuser
+	@PostMapping(path="/createuser")
+	public ResponseEntity<User> createuser(@RequestBody User newuser) throws UsernameAlreadyExistsException 
+	{
+		User customer= userServ.register(newuser);
+		return ResponseEntity.status(HttpStatus.CREATED).body(customer);
+	}
 	
 //	@GetMapping(path="/getPlanbyID/{plan_Id}")
 //	public ResponseEntity<Plan> getPlanbyID(@PathVariable int plan_Id) 
