@@ -2,9 +2,11 @@ package p2CoffeeRoastesvanquishbackend.controllers;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
+
 import java.util.Set;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,9 +30,11 @@ import p2CoffeeRoastesvanquishbackend.beans.CustomerPlan;
 import p2CoffeeRoastesvanquishbackend.beans.Plan;
 
 import p2CoffeeRoastesvanquishbackend.beans.User;
+import p2CoffeeRoastesvanquishbackend.exceptions.CustomerDoesNotExistException;
 //import p2CoffeeRoastesvanquishbackend.exceptions.IncorrectAddressExeption;
 import p2CoffeeRoastesvanquishbackend.exceptions.IncorrectCredentialsException;
 import p2CoffeeRoastesvanquishbackend.exceptions.UsernameAlreadyExistsException;
+
 import p2CoffeeRoastesvanquishbackend.exceptions.customerplandoesnotexist;
 import p2CoffeeRoastesvanquishbackend.services.AdminService;
 import p2CoffeeRoastesvanquishbackend.services.UserService;
@@ -49,8 +53,13 @@ public class UsersController {
 		this.userServ = userServ;
 	}
 
-	public ResponseEntity<Map<String, Integer>> register(@RequestBody User newUser) {
+	private static Logger log = LogManager.getLogger(UsersController.class);
+
+	
+	public ResponseEntity<Map<String,Integer>> register(@RequestBody User newUser) {
+
 		try {
+			log.info("Registering New User: "+newUser.getUsername());
 			newUser = userServ.register(newUser);
 			Map<String, Integer> newIdMap = new HashMap<>();
 			newIdMap.put("generatedId", newUser.getId());
@@ -63,14 +72,19 @@ public class UsersController {
 	// POST to /users/auth
 	@PostMapping(path = "/auth")
 	public ResponseEntity<String> logIn(@RequestBody Map<String, String> credentials) {
+		
 		String username = credentials.get("username");
 		String password = credentials.get("password");
+
+		log.info("Attmpt to login: "+username+" "+password);
 
 		try {
 			User person = userServ.logIn(username, password);
 			String token = Integer.toString(person.getId());
+			log.info("Logged In: "+username+" "+password);
 			return ResponseEntity.ok(token);
 		} catch (IncorrectCredentialsException e) {
+			log.error("Failure to log In: "+username+" "+password);
 			return ResponseEntity.notFound().build();
 		}
 	}
@@ -81,11 +95,16 @@ public class UsersController {
 		String type = input.get("type");
 		String quantity = input.get("quantity");
 		String grind = input.get("grind");
-		String frequency = input.get("frequency");
+
+		String frequency= input.get("frequency");
+		
+		log.info("Attempt to Get Plan:"+preference+" "+type+" "+quantity+" "+grind+" "+frequency);
+
 
 		try {
 			Plan plan = userServ.getPlan(preference, type, quantity, grind, frequency);
 //			String token = Integer.toString(person.getId());
+			log.info("Sucsessfully got Plan:"+preference+" "+type+" "+quantity+" "+grind+" "+frequency);
 			return ResponseEntity.ok(plan);
 		} finally {
 
@@ -96,24 +115,36 @@ public class UsersController {
 	}
 
 	// GET to /users/{userId}/auth
-	@GetMapping(path = "/{userId}/auth")
-	public ResponseEntity<User> checkLogin(@PathVariable int userId) {
+
+	@GetMapping(path="/{userId}/auth")
+	public ResponseEntity<User> checkLogin(@PathVariable int userId) throws CustomerDoesNotExistException {
 		User loggedInPerson = userServ.getUserById(userId);
-		if (loggedInPerson != null) {
+		if (loggedInPerson!=null) {
+			log.info("Sucsessfully Authenticated:"+loggedInPerson.getUsername());
+
 			return ResponseEntity.ok(loggedInPerson);
 		} else {
+			log.error("Failure to authenticate: "+ loggedInPerson.getUsername());
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
 	}
 
 	// GET to /users/{userId}
-	@GetMapping(path = "/{userId}")
-	public ResponseEntity<User> getUserById(@PathVariable int userId) {
+
+	@GetMapping(path="/{userId}")
+	public ResponseEntity<User> getUserById(@PathVariable int userId) throws CustomerDoesNotExistException {
+
 		User user = userServ.getUserById(userId);
 		if (user != null)
+		{
+			log.info("Got "+user.getUsername() +"by id: "+ userId);
 			return ResponseEntity.ok(user);
+		}
 		else
+		{
+			log.error("Failed to get by id: "+userId);
 			return ResponseEntity.notFound().build();
+		}
 	}
 
 	// PUT to /users/{userId}
@@ -130,6 +161,7 @@ public class UsersController {
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
 	}
+
 
 	@PostMapping(path = "/card")
 	public ResponseEntity<Void> addCreditCard(@RequestBody CreditCard newCreditCard) {
@@ -150,6 +182,7 @@ public class UsersController {
 		else
 			return ResponseEntity.notFound().build();
 	}
+
 
 	@PostMapping(path = "/createPlan")
 	public ResponseEntity<CustomerPlan> logIn(@RequestBody CustomerPlan newPlan) {
@@ -193,6 +226,17 @@ public class UsersController {
 		Set<CustomerPlan> activecustomerplans = userServ.getallactiveplans(user_id);
 		return ResponseEntity.status(HttpStatus.CREATED).body(activecustomerplans);
 	}
+
+	
+	
+	// Post to /createuser
+	@PostMapping(path="/createuser")
+	public ResponseEntity<User> createuser(@RequestBody User newuser) throws UsernameAlreadyExistsException 
+	{
+		User customer= userServ.register(newuser);
+		return ResponseEntity.status(HttpStatus.CREATED).body(customer);
+	}
+	
 
 //	@GetMapping(path="/getPlanbyID/{plan_Id}")
 //	public ResponseEntity<Plan> getPlanbyID(@PathVariable int plan_Id) 

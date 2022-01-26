@@ -19,7 +19,7 @@ import p2CoffeeRoastesvanquishbackend.beans.CustomerPlan;
 import p2CoffeeRoastesvanquishbackend.data.CustomerPlanRepository;
 
 import p2CoffeeRoastesvanquishbackend.data.UserRepository;
-
+import p2CoffeeRoastesvanquishbackend.exceptions.CustomerDoesNotExistException;
 import p2CoffeeRoastesvanquishbackend.exceptions.IncorrectCredentialsException;
 import p2CoffeeRoastesvanquishbackend.exceptions.UsernameAlreadyExistsException;
 import p2CoffeeRoastesvanquishbackend.exceptions.customerplandoesnotexist;
@@ -137,7 +137,7 @@ public class UserServiceImpl implements UserService {
 		{
 			if(Customerplanrepo.getOne(i).getUser().getId()==user_id && Customerplanrepo.getOne(i).getActive_plan()=="True")
 			{
->>>>>>> c9b0eebb13308f52f1c24069b8231708b2ee5c42
+ c9b0eebb13308f52f1c24069b8231708b2ee5c42
 				customerplans.add(Customerplanrepo.getOne(i));
 			}
 		}*/
@@ -146,12 +146,18 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User getUserById(int id) {
+	public User getUserById(int id) throws CustomerDoesNotExistException 
+	{
 		Optional<User> user = Optional.ofNullable(userRepo.findById(id));
-		if (user.isPresent())
-			return user.get();
-		else
-			return null;
+
+// 		if (user.isPresent())
+// 			return user.get();
+// 		else
+// 			return null;
+
+		if (user.isPresent()) return user.get();
+		else throw new CustomerDoesNotExistException();
+
 
 	}
 

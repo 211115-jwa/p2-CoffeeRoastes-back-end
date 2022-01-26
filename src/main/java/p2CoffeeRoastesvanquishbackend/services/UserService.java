@@ -10,6 +10,7 @@ import p2CoffeeRoastesvanquishbackend.beans.Address;
 import p2CoffeeRoastesvanquishbackend.beans.CustomerPlan;
 
 import p2CoffeeRoastesvanquishbackend.beans.User;
+import p2CoffeeRoastesvanquishbackend.exceptions.CustomerDoesNotExistException;
 import p2CoffeeRoastesvanquishbackend.exceptions.IncorrectAddressExeption;
 import p2CoffeeRoastesvanquishbackend.exceptions.IncorrectCredentialsException;
 import p2CoffeeRoastesvanquishbackend.exceptions.UsernameAlreadyExistsException;
@@ -20,11 +21,13 @@ public interface UserService {
 
 	public User logIn(String username, String password) throws IncorrectCredentialsException;
 
+
 	public int addNewCreditCard(CreditCard newCreditCard);
 
 	public User getCreditCardByUser(String creditCardUser);
 
 	public User getUserById(int id);
+
 
 	public User updateUser(User userToUpdate);
 

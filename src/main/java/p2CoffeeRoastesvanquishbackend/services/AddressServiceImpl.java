@@ -1,43 +1,48 @@
 package p2CoffeeRoastesvanquishbackend.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.stereotype.Service;
 import org.springframework.stereotype.Service;
-
 import p2CoffeeRoastesvanquishbackend.beans.Address;
 import p2CoffeeRoastesvanquishbackend.data.AddressRepository;
-
 import p2CoffeeRoastesvanquishbackend.exceptions.IncorrectAddressExeption;
 
 @Service
 
 public class AddressServiceImpl implements AddressService {
 
+	
 	private AddressRepository addressRepo;
 	
 	
-
 	@Autowired
-	public AddressServiceImpl(AddressRepository addressRepo) {
+	public AddressServiceImpl(AddressRepository AddressRepo) {
 		
-   	this.addressRepo = addressRepo;
+   	this.addressRepo= AddressRepo;
 
 	}
-	// This function is to Look up address by User id
-
-//	@Override
-//	public Address addNewAddress(Address newAddress) {
-//
-//		return addressRepo.create(newAddress);
-//	}
-
+	
 	// This function is to Add Address where user is
 
 	@Override
+	public Address addNewAddress(Address newAddress) {
+           
+	    Address addressAdded =  addressRepo.save(newAddress);
+		
+	    if(addressAdded !=null) {
+	    
+		return addressAdded;	}
+		else {return null;}
+	}
+
+	
+	
+	// This function is to Look up address by User id
+
+	@Override
 	public Address getLookUpAddressByUser(int user_id) {
-		Address UserByAddress = addressRepo.findAddressByUserId(user_id);
+		Address UserByAddress = addressRepo.findByUserId(user_id);
 		if (UserByAddress != null) {
-			return null;
+			addressRepo.findById(user_id);
 		}
 		return UserByAddress;
 	}
@@ -47,7 +52,7 @@ public class AddressServiceImpl implements AddressService {
 	@Override
 	public Address deleteAddressById(int id) throws IncorrectAddressExeption {
 
-		Address DeleteUserAddressFromDatabase = addressRepo.findAddressByUserId(id);
+		Address DeleteUserAddressFromDatabase =addressRepo.findByUserId(id);
 		if (DeleteUserAddressFromDatabase != null) {
 			return DeleteUserAddressFromDatabase;
 
