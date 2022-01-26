@@ -48,7 +48,7 @@ public class CreditCardController {
 	@GetMapping(path = "/creditcard/{id}")
 	public ResponseEntity<CreditCard> LookUpCreditCard(@RequestBody String token, @PathVariable int user_id) {
 
-		CreditCard UserCreditCardId = creditCardService.getLookUpCreditCardByUser(user_id);
+		CreditCard UserCreditCardId = (CreditCard) creditCardService.getLookUpCreditCardByUser(user_id);
 		if (UserCreditCardId != null) {
 			return ResponseEntity.ok(UserCreditCardId);
 		} else {

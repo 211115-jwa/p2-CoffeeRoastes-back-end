@@ -1,5 +1,7 @@
 package p2CoffeeRoastesvanquishbackend.services;
 
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import p2CoffeeRoastesvanquishbackend.beans.Address;
@@ -38,21 +40,26 @@ public class AddressServiceImpl implements AddressService {
 	
 	// This function is to Look up address by User id
 
+	
+//	has to return a set
 	@Override
-	public Address getLookUpAddressByUser(int user_id) {
-		Address UserByAddress = addressRepo.findByUserId(user_id);
+	public Set<Address> getLookUpAddressByUser(int user_id) {
+		Set<Address> UserByAddress = addressRepo.findByUserId(user_id);
 		if (UserByAddress != null) {
-			addressRepo.findById(user_id);
+			return UserByAddress;
 		}
-		return UserByAddress;
+		return null;
 	}
 
     //  This function is to Delete address by Id
+	
+	
+//	get adress by id
 
 	@Override
 	public Address deleteAddressById(int id) throws IncorrectAddressExeption {
 
-		Address DeleteUserAddressFromDatabase =addressRepo.findByUserId(id);
+		Address DeleteUserAddressFromDatabase =addressRepo.findById(id);
 		if (DeleteUserAddressFromDatabase != null) {
 			return DeleteUserAddressFromDatabase;
 
@@ -61,5 +68,19 @@ public class AddressServiceImpl implements AddressService {
 			throw new IncorrectAddressExeption();
 		}
 
+	}
+
+	@Override
+	public Address getAddressById(int id) {
+		Address address =addressRepo.findById(id);
+		if (address != null) {
+			return address;
+
+		}
+//		else {
+//
+//			throw new IncorrectAddressExeption();
+//		}
+		return null;
 	}
 }

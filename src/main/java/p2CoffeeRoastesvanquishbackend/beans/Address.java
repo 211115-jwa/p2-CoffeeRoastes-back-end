@@ -18,7 +18,7 @@ public class Address
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="address_id")
-	private int address_id;
+	private int id;
 	@Column(name="zip")
 	private int zip;
 	@OneToOne
@@ -35,7 +35,7 @@ public class Address
 
 
 	public Address() {
-		address_id = 1;
+		id = 1;
 		zip = 1;
 		user = new User();
 		street_address= "Default Street Address";
@@ -47,12 +47,12 @@ public class Address
 
 
 	public int getAddress_id() {
-		return address_id;
+		return id;
 	}
 
 
 	public void setAddress_id(int address_id) {
-		this.address_id = address_id;
+		this.id = address_id;
 	}
 
 
@@ -119,7 +119,7 @@ public class Address
 
 	@Override
 	public String toString() {
-		return "Address [address_id=" + address_id + ", zip=" + zip + ", user=" + user + ", street_address="
+		return "Address [address_id=" + id + ", zip=" + zip + ", user=" + user + ", street_address="
 				+ street_address + ", city=" + city + ", state=" + state + ", apt=" + apt + "]";
 	}
 
@@ -127,7 +127,7 @@ public class Address
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(address_id, apt, city, state, street_address, user, zip);
+		return Objects.hash(id, apt, city, state, street_address, user, zip);
 	}
 
 
@@ -141,7 +141,7 @@ public class Address
 		if (getClass() != obj.getClass())
 			return false;
 		Address other = (Address) obj;
-		return address_id == other.address_id && Objects.equals(apt, other.apt) && Objects.equals(city, other.city)
+		return id == other.id && Objects.equals(apt, other.apt) && Objects.equals(city, other.city)
 				&& Objects.equals(state, other.state) && Objects.equals(street_address, other.street_address)
 				&& Objects.equals(user, other.user) && zip == other.zip;
 	}

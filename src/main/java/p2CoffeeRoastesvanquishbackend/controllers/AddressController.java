@@ -1,5 +1,7 @@
 package p2CoffeeRoastesvanquishbackend.controllers;
 
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.context.annotation.Configuration;
@@ -65,9 +67,9 @@ public class AddressController {
 	
 	
 		@GetMapping(path="/address/{id}")
-		public ResponseEntity<Address> LookUpAddress(@RequestBody String token,
+		public ResponseEntity<Set<Address>> LookUpAddress(@RequestBody String token,
 				@PathVariable int user_id) {
-			Address UserAddressId = addressService.getLookUpAddressByUser(user_id);
+			Set<Address> UserAddressId = addressService.getLookUpAddressByUser(user_id);
 			if (UserAddressId!=null) {
 				return ResponseEntity.ok(UserAddressId);
 			} else {

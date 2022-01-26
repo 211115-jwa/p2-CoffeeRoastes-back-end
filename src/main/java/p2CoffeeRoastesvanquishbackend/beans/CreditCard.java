@@ -22,7 +22,7 @@ public class CreditCard
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	
 	@Column(name="card_id")
-	private int card_id;
+	private int id;
 	@Column(name="card_number")
 	private String card_number;
 	@ManyToOne
@@ -30,17 +30,17 @@ public class CreditCard
 	private User user;
 
 	public CreditCard() {
-		card_id = 1;
+		id = 1;
 		card_number = "0000000000000000";
 		user = new User();
 	}
 
 	public int getCard_id() {
-		return card_id;
+		return id;
 	}
 
 	public void setCard_id(int card_id) {
-		this.card_id = card_id;
+		this.id = card_id;
 	}
 
 	public String getCard_number() {
@@ -61,7 +61,7 @@ public class CreditCard
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(card_id, card_number, user);
+		return Objects.hash(id, card_number, user);
 	}
 
 	@Override
@@ -73,13 +73,13 @@ public class CreditCard
 		if (getClass() != obj.getClass())
 			return false;
 		CreditCard other = (CreditCard) obj;
-		return card_id == other.card_id && Objects.equals(card_number, other.card_number)
+		return id == other.id && Objects.equals(card_number, other.card_number)
 				&& Objects.equals(user, other.user);
 	}
 
 	@Override
 	public String toString() {
-		return "CreditCard [card_id=" + card_id + ", card_number=" + card_number + ", user=" + user + "]";
+		return "CreditCard [card_id=" + id + ", card_number=" + card_number + ", user=" + user + "]";
 	}
 
 }
