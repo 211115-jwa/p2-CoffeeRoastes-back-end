@@ -48,14 +48,18 @@ public class AddressController {
 	 
 	
 	
-	@PostMapping (path = "/address/{id}")
+	@PostMapping (path = "/add")
 	public ResponseEntity<Void> addAddress(@RequestBody Address newAddress){
 		
 		if (newAddress !=null) {
+	
 			addressService.addNewAddress(newAddress);
 			return ResponseEntity.status(HttpStatus.CREATED).build();
+	}else {
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 	}
-	return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+		
+
 	}
 	
 	
@@ -75,7 +79,7 @@ public class AddressController {
 	
 
 	 @DeleteMapping(path = "/address/{id}")
-	public ResponseEntity<String> deleteAddress(@RequestBody Address id) throws IncorrectAddressExeption {
+	public ResponseEntity<String> deleteAddress(@RequestBody int id) throws IncorrectAddressExeption {
 		Address addressDeletedId = addressService.deleteAddressById(id);
 		String token = Integer.toString(addressDeletedId.getAddress_id());
 		return ResponseEntity.ok(token);

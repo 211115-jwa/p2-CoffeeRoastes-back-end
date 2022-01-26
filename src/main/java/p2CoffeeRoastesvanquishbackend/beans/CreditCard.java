@@ -19,7 +19,7 @@ import javax.persistence.Table;
 public class CreditCard 
 {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	
 	@Column(name="card_id")
 	private int card_id;
