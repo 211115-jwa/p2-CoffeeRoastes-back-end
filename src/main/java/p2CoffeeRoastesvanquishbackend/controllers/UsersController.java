@@ -76,7 +76,7 @@ public class UsersController {
 			log.info("Logged In: "+username+" "+password);
 			return ResponseEntity.ok(token);
 		} catch (IncorrectCredentialsException e) {
-			log.info("Failure to log In: "+username+" "+password);
+			log.error("Failure to log In: "+username+" "+password);
 			return ResponseEntity.notFound().build();
 		}
 	}
@@ -109,8 +109,10 @@ public class UsersController {
 	public ResponseEntity<User> checkLogin(@PathVariable int userId) throws CustomerDoesNotExistException {
 		User loggedInPerson = userServ.getUserById(userId);
 		if (loggedInPerson!=null) {
+			log.info("Sucsessfully Authenticated:"+loggedInPerson.getUsername());
 			return ResponseEntity.ok(loggedInPerson);
 		} else {
+			log.error("Failure to authenticate: "+ loggedInPerson.getUsername());
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
 	}
@@ -120,9 +122,15 @@ public class UsersController {
 	public ResponseEntity<User> getUserById(@PathVariable int userId) throws CustomerDoesNotExistException {
 		User user = userServ.getUserById(userId);
 		if (user != null)
+		{
+			log.info("Got "+user.getUsername() +"by id: "+ userId);
 			return ResponseEntity.ok(user);
+		}
 		else
+		{
+			log.error("Failed to get by id: "+userId);
 			return ResponseEntity.notFound().build();
+		}
 	}
 	
 	// PUT to /users/{userId}
