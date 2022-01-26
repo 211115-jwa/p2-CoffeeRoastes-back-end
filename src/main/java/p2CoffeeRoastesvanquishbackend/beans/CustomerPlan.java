@@ -108,7 +108,7 @@ public class CustomerPlan {
 
 	public void setCard(CreditCard credit_card) {
 		this.credit_card = credit_card;
-
+	}
 
 	
 	public Plan getCustomerPlan() {
