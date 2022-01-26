@@ -1,5 +1,7 @@
 package p2CoffeeRoastesvanquishbackend.services;
 
+import p2CoffeeRoastesvanquishbackend.beans.CreditCard;
+
 import p2CoffeeRoastesvanquishbackend.beans.Plan;
 
 import java.util.Set;
@@ -18,18 +20,22 @@ public interface UserService {
 	public User register(User newUser) throws UsernameAlreadyExistsException;
 
 	public User logIn(String username, String password) throws IncorrectCredentialsException;
-	
-	public User getUserById(int id) throws CustomerDoesNotExistException;
-	
+
+
+	public int addNewCreditCard(CreditCard newCreditCard);
+
+	public User getCreditCardByUser(String creditCardUser);
+
+	public User getUserById(int id);
+
+
 	public User updateUser(User userToUpdate);
 
 	public Plan getPlan(String preference, String type, String quantity, String grind, String frequency);
-	
 
+	// public Address addNewAddress(Address newAddress);
 
-	//public Address addNewAddress(Address newAddress);
-
-	//public Address getLookUpAddressByUser(int user_id);
+	// public Address getLookUpAddressByUser(int user_id);
 
 	public CustomerPlan getcustomerPlanbyID(int customerplanID) throws customerplandoesnotexist;
 
@@ -41,8 +47,6 @@ public interface UserService {
 
 	public Set<CustomerPlan> getallactiveplans(int user_id);
 
-	//public Address deleteAddressById(Address id)throws IncorrectAddressExeption;
-
-	
+	// public Address deleteAddressById(Address id)throws IncorrectAddressExeption;
 
 }
