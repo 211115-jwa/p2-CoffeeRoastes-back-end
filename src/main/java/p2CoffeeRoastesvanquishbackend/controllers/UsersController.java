@@ -59,6 +59,7 @@ public class UsersController {
 			newIdMap.put("generatedId", newUser.getId());
 			return ResponseEntity.status(HttpStatus.CREATED).body(newIdMap);
 		} catch (UsernameAlreadyExistsException e) {
+			log.error("Failed to register New User: "+newUser.getUsername());
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
 	}
@@ -69,7 +70,6 @@ public class UsersController {
 		
 		String username = credentials.get("username");
 		String password = credentials.get("password");
-		log.info("Attmpt to login: "+username+" "+password);
 		try {
 			User person = userServ.logIn(username, password);
 			String token = Integer.toString(person.getId());
@@ -141,9 +141,15 @@ public class UsersController {
 		if (userToEdit != null && userToEdit.getId() == userId) {
 			userToEdit = userServ.updateUser(userToEdit);
 			if (userToEdit != null)
+			{
+				log.info("Updated User: "+userToEdit.getUsername());
 				return ResponseEntity.ok(userToEdit);
+			}
 			else
+			{
+				log.error("Failed to update User: "+userToEdit.getUsername());
 				return ResponseEntity.notFound().build();
+			}
 		} else {
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
@@ -155,6 +161,7 @@ public class UsersController {
 	public ResponseEntity<CustomerPlan> logIn(@RequestBody CustomerPlan newPlan) 
 	{
 		userServ.CreateNewPlan(newPlan);
+		log.info("Created new plan for User: "+ newPlan.getUser().getUsername() + " of id:"+ newPlan.getCustomer_plan_id());
 		return ResponseEntity.status(HttpStatus.CREATED).body(newPlan);
 	}
 
@@ -163,6 +170,7 @@ public class UsersController {
 	@GetMapping(path="/getCustomerPlans/{user_Id}")
 	public ResponseEntity<Set<Plan>> getCustomerPlan(@PathVariable int user_Id) 
 	{
+		log.info("Getting Customer Plans by UserID:" + user_Id);
 		Set<Plan> plans= adminServ.getPlansByUserId(user_Id);
 		return ResponseEntity.status(HttpStatus.CREATED).body(plans);
 	}
@@ -171,6 +179,7 @@ public class UsersController {
 	@GetMapping(path="/getcustomerPlanbyID/{customer_plan_id}")
 	public ResponseEntity<CustomerPlan> getPlanbyID(@PathVariable int customer_plan_id) throws customerplandoesnotexist 
 	{
+		log.info("Getting Customer Plan by PlandID:" + customer_plan_id);
 		CustomerPlan customerplan= userServ.getcustomerPlanbyID(customer_plan_id);
 		return ResponseEntity.status(HttpStatus.CREATED).body(customerplan);
 	}

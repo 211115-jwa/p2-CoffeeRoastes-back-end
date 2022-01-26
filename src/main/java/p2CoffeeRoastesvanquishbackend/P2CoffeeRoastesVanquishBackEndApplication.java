@@ -9,5 +9,4 @@ public class P2CoffeeRoastesVanquishBackEndApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(P2CoffeeRoastesVanquishBackEndApplication.class, args);
 	}
-
 }
