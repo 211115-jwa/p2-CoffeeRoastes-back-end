@@ -8,6 +8,5 @@ public interface CreditCardRepository extends JpaRepository<CreditCard, Integer>
 	public CreditCard addNewCreditCard(CreditCard newCreditCard);
 	public CreditCard getCreditCardByUser(String creditCardUser);
 
-
 }
 
