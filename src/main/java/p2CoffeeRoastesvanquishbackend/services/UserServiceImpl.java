@@ -22,7 +22,7 @@ import p2CoffeeRoastesvanquishbackend.beans.CustomerPlan;
 import p2CoffeeRoastesvanquishbackend.data.CustomerPlanRepository;
 
 import p2CoffeeRoastesvanquishbackend.data.UserRepository;
-
+import p2CoffeeRoastesvanquishbackend.exceptions.CustomerDoesNotExistException;
 import p2CoffeeRoastesvanquishbackend.exceptions.IncorrectCredentialsException;
 import p2CoffeeRoastesvanquishbackend.exceptions.UsernameAlreadyExistsException;
 import p2CoffeeRoastesvanquishbackend.exceptions.customerplandoesnotexist;
@@ -146,10 +146,11 @@ public class UserServiceImpl implements UserService  {
 
 
 	@Override
-	public User getUserById(int id) {
+	public User getUserById(int id) throws CustomerDoesNotExistException 
+	{
 		Optional<User> user = Optional.ofNullable(userRepo.findById(id));
 		if (user.isPresent()) return user.get();
-		else return null;
+		else throw new CustomerDoesNotExistException();
 
 	}
 
