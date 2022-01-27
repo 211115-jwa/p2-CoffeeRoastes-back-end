@@ -73,10 +73,10 @@ public class AddressController {
 	}
 
 	@GetMapping(path = "/{Id}")
-	public ResponseEntity<Address> AddressById(@PathVariable int id) {
-		Address AddressById = addressService.getAddressById(id);
-		if (AddressById != null)
-			return ResponseEntity.ok(AddressById);
+	public ResponseEntity<Address> LocateUserAddressById(@PathVariable int id) {
+		Address addressById = addressService.getAddressById(id);
+		if (addressById != null)
+			return ResponseEntity.ok(addressById);
 		else
 			return ResponseEntity.notFound().build();
 	}
