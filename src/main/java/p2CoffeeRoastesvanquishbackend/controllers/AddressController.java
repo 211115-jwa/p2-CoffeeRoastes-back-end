@@ -1,5 +1,7 @@
 package p2CoffeeRoastesvanquishbackend.controllers;
 
+import java.util.Collections;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,19 +63,22 @@ public class AddressController {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 	}
 		
+		
 
 	}
 	
 	
 	
-		@GetMapping(path="/address/{id}")
-		public ResponseEntity<Set<Address>> LookUpAddress(@RequestBody String token,
-				@PathVariable int user_id) {
-			Set<Address> UserAddressId = addressService.getLookUpAddressByUser(user_id);
-			if (UserAddressId!=null) {
-				return ResponseEntity.ok(UserAddressId);
+		@PostMapping(path="/user")
+		public ResponseEntity<Set<Address>> getAddressByUsername(@RequestBody Map<String, String>  input) {
+			String username = input.get("username");
+			Set<Address> UserAddressName = addressService.searchAddressByUsername(username);
+			if (UserAddressName!=null) {
+				return ResponseEntity.ok(UserAddressName);
 			} else {
-				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+				
+				   Set<Address> EmptySet = Collections.<Address>emptySet();
+					return ResponseEntity.ok(EmptySet);
 			}
 			
 			

@@ -11,7 +11,7 @@ import p2CoffeeRoastesvanquishbackend.beans.CreditCard;
 @Repository
 public interface CreditCardRepository extends JpaRepository<CreditCard, Integer> {
 
-	public Set<CreditCard> findByUserId(int id);
-	public CreditCard findById(int id);
+	public Set<CreditCard> findByUserUsername(String name);
+	public CreditCard findById(String name);
 	
 }

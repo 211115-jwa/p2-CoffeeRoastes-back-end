@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -16,12 +17,12 @@ import javax.persistence.Table;
 public class Address 
 {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="address_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@Column(name="zip")
 	private int zip;
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name="user_id") 
 	private User user;
 	@Column(name="street_address")
@@ -51,8 +52,8 @@ public class Address
 	}
 
 
-	public void setAddress_id(int address_id) {
-		this.id = address_id;
+	public void setAddress_id(int id) {
+		this.id = id;
 	}
 
 

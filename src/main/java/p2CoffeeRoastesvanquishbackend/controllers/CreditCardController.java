@@ -1,5 +1,9 @@
 package p2CoffeeRoastesvanquishbackend.controllers;
 
+import java.util.Collections;
+import java.util.Map;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.context.annotation.Configuration;
@@ -14,12 +18,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import p2CoffeeRoastesvanquishbackend.beans.Address;
 import p2CoffeeRoastesvanquishbackend.beans.CreditCard;
 import p2CoffeeRoastesvanquishbackend.services.CreditCardService;
 
 @Configuration
 @RestController
-@RequestMapping(path = "/creditcard")
+@RequestMapping(path = "/card")
 @CrossOrigin(origins = "http://localhost:4200")
 public class CreditCardController {
 
@@ -36,7 +41,6 @@ public class CreditCardController {
 
 	@PostMapping(path = "/add")
 	public ResponseEntity<Void> addCreditCard(@RequestBody CreditCard newCreditCard) {
-
 		if (newCreditCard != null) {
 			creditCardService.addNewCreditCard(newCreditCard);
 			return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -45,14 +49,17 @@ public class CreditCardController {
 		}
 	}
 
-	@GetMapping(path = "/creditcard/{id}")
-	public ResponseEntity<CreditCard> LookUpCreditCard(@RequestBody String token, @PathVariable int user_id) {
+	@PostMapping(path = "/user")
+	public ResponseEntity<Set<CreditCard>>findCardsByUsername(@RequestBody Map<String, String>  input) {
+		String username = input.get("username");
+		Set<CreditCard> cards = creditCardService.findCreditCardByUser(username);
 
-		CreditCard UserCreditCardId = (CreditCard) creditCardService.getLookUpCreditCardByUser(user_id);
-		if (UserCreditCardId != null) {
-			return ResponseEntity.ok(UserCreditCardId);
+		if (cards!=null) {
+			return ResponseEntity.ok(cards);
 		} else {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+	
+			   Set<CreditCard> EmptySet = Collections.<CreditCard>emptySet();
+				return ResponseEntity.ok(EmptySet);
 		}
 	}
 

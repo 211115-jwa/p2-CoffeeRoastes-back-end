@@ -8,6 +8,6 @@ public interface CreditCardService {
 
 	public CreditCard addNewCreditCard(CreditCard newCreditCard);
 
-	public Set <CreditCard> getLookUpCreditCardByUser(int user_id);
+	public Set <CreditCard> findCreditCardByUser(String username);
 
 }

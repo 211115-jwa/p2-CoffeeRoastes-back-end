@@ -15,7 +15,7 @@ import p2CoffeeRoastesvanquishbackend.beans.User;
 import p2CoffeeRoastesvanquishbackend.data.PlanRepository;
 
 import p2CoffeeRoastesvanquishbackend.beans.CustomerPlan;
-
+import p2CoffeeRoastesvanquishbackend.data.CreditCardRepository;
 import p2CoffeeRoastesvanquishbackend.data.CustomerPlanRepository;
 
 import p2CoffeeRoastesvanquishbackend.data.UserRepository;
@@ -29,12 +29,14 @@ public class UserServiceImpl implements UserService {
 	private UserRepository userRepo;
 	private PlanRepository planRepo;
 	private CustomerPlanRepository Customerplanrepo;
+	private CreditCardRepository creditRepo;
 
 	@Autowired
-	public UserServiceImpl(UserRepository userRepo, CustomerPlanRepository Customerplanrepo, PlanRepository planRepo) {
+	public UserServiceImpl(UserRepository userRepo, CustomerPlanRepository Customerplanrepo, PlanRepository planRepo,  CreditCardRepository creditRepo) {
 		this.userRepo = userRepo;
 		this.Customerplanrepo = Customerplanrepo;
 		this.planRepo = planRepo;
+		this.creditRepo = creditRepo;
 
 	}
 
@@ -93,8 +95,13 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public CustomerPlan CreateNewPlan(CustomerPlan customerplan) {
-		Customerplanrepo.save(customerplan);
-		return customerplan;
+		CustomerPlan plan =Customerplanrepo.save(customerplan);
+		if (plan != null) {
+			return plan;
+		} else {
+			return null;
+		}
+
 	}
 
 	@Override
@@ -145,36 +152,16 @@ public class UserServiceImpl implements UserService {
 		return customerplans;
 	}
 
+	
 	@Override
-	public User getUserById(int id) throws CustomerDoesNotExistException 
-	{
+	public User getUserById(int id) {
 		Optional<User> user = Optional.ofNullable(userRepo.findById(id));
-
-// 		if (user.isPresent())
-// 			return user.get();
-// 		else
-// 			return null;
-
 		if (user.isPresent()) return user.get();
-		else throw new CustomerDoesNotExistException();
-
+		else return null;
 
 	}
 
-	@Override
-	@Transactional
-	public int addNewCreditCard(CreditCard newCreditCard) {
-		return creditCardRepo.save(newCreditCard).getCreditCardId();
-	}
 
-	@Override
-	public User getCreditCardByUser(String creditCardUser) {
-		User UserByCreditCard = creditCardRepo.findCreditCardByUser(user);
-		if (UserByCreditCard != null) {
-			return null;
-		}
-		return UserByCreditCard;
-	}
 
 	public User updateUser(User userToUpdate) {
 		if (userRepo.existsById(userToUpdate.getId())) {

@@ -22,9 +22,7 @@ public interface UserService {
 	public User logIn(String username, String password) throws IncorrectCredentialsException;
 
 
-	public int addNewCreditCard(CreditCard newCreditCard);
 
-	public User getCreditCardByUser(String creditCardUser);
 
 	public User getUserById(int id);
 

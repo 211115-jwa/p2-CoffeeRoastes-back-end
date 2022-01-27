@@ -32,7 +32,7 @@ public class AddressServiceImpl implements AddressService {
 		
 	    if(addressAdded !=null) {
 	    
-		return addressAdded;	}
+		return addressAdded;}
 		else {return null;}
 	}
 
@@ -42,14 +42,6 @@ public class AddressServiceImpl implements AddressService {
 
 	
 //	has to return a set
-	@Override
-	public Set<Address> getLookUpAddressByUser(int user_id) {
-		Set<Address> UserByAddress = addressRepo.findByUserId(user_id);
-		if (UserByAddress != null) {
-			return UserByAddress;
-		}
-		return null;
-	}
 
     //  This function is to Delete address by Id
 	
@@ -82,5 +74,15 @@ public class AddressServiceImpl implements AddressService {
 //			throw new IncorrectAddressExeption();
 //		}
 		return null;
+	}
+
+	@Override
+	public Set<Address> searchAddressByUsername(String input) {
+		
+//		String username = input.get("username");
+
+	Set<Address>  addressByUsername = addressRepo.findByUserUsername(input);
+	return addressByUsername;
+
 	}
 }

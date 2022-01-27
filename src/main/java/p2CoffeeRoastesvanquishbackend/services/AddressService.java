@@ -9,7 +9,7 @@ public interface AddressService {
 	
 	public Address addNewAddress(Address newAddress);
 
-	public Set<Address> getLookUpAddressByUser(int user_id);
+	public Set<Address> searchAddressByUsername(String username);
 	
 	public Address deleteAddressById(int id)throws IncorrectAddressExeption;
 	

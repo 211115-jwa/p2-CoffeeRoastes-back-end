@@ -24,24 +24,24 @@ import javax.persistence.OneToOne;
 public class CustomerPlan {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name= "customer_plan_id")
-	private int customer_plan_id =1;
+	@Column(name="customer_plan_id")
+	private int customer_plan_id;
 	@ManyToOne
 	@JoinColumn(name="plan_id")
-	private Plan  plan;
+	private Plan plan;
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	private User user;
-	@Column(name="plan_activated_date")
-	private LocalDateTime planActivatedDate;
-	@Column(name="active_plan")
-	private String active;
 	@ManyToOne
     @JoinColumn(name="address_id")
 	private Address address;
 	@ManyToOne
 	@JoinColumn(name="card_id")
 	private CreditCard credit_card;
+	@Column(name="plan_activated_date")
+	private LocalDateTime planActivatedDate;
+	@Column(name="active_plan")
+	private String active;
 	
 	
 	
@@ -50,9 +50,9 @@ public class CustomerPlan {
 		address = new Address();
 		plan = new Plan();
 		user = new User();
-		planActivatedDate= LocalDateTime.now();	// ("dd-MM-yyyy HH:mm:ss");
+		credit_card= new CreditCard();
+		planActivatedDate= LocalDateTime.now();	// ("dd-MM-yyyy HH:mm:ss");	
 		active = "true";
-		credit_card= new  CreditCard();
 	}
 
 

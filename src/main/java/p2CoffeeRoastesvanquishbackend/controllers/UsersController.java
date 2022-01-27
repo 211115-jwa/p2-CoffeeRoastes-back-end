@@ -163,31 +163,21 @@ public class UsersController {
 	}
 
 
-	@PostMapping(path = "/card")
-	public ResponseEntity<Void> addCreditCard(@RequestBody CreditCard newCreditCard) {
 
-		if (newCreditCard != null) {
-			userServ.addNewCreditCard(newCreditCard);
+
+
+
+
+	@PostMapping(path = "/create/plan")
+	public ResponseEntity<Void>  createCustomerPlan(@RequestBody CustomerPlan newPlan) {
+	
+		if (newPlan != null) {
+			userServ.CreateNewPlan(newPlan);
 			return ResponseEntity.status(HttpStatus.CREATED).build();
+		} else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-	}
 
-	@GetMapping(path = "/card/{UserId}")
-	public ResponseEntity<User> getCreditCardByUser(@PathVariable String creditCardUser) {
-
-		User creditCard = userServ.getCreditCardByUser(creditCardUser);
-		if (creditCard != null)
-			return ResponseEntity.ok(creditCard);
-		else
-			return ResponseEntity.notFound().build();
-	}
-
-
-	@PostMapping(path = "/createPlan")
-	public ResponseEntity<CustomerPlan> logIn(@RequestBody CustomerPlan newPlan) {
-		userServ.CreateNewPlan(newPlan);
-		return ResponseEntity.status(HttpStatus.CREATED).body(newPlan);
 	}
 
 	// Get to /users/getCustomerPlans
@@ -238,66 +228,4 @@ public class UsersController {
 	}
 	
 
-//	@GetMapping(path="/getPlanbyID/{plan_Id}")
-//	public ResponseEntity<Plan> getPlanbyID(@PathVariable int plan_Id) 
-//	{
-//		Plan plan= userServ.getPlanById(plan_Id);
-//		return ResponseEntity.status(HttpStatus.CREATED).body(plan);
-//	}
-//	
-//	@DeleteMapping(path="/deletePlanbyID/{plan_Id}")
-//	public ResponseEntity<Plan> deletePlanbyID(@PathVariable int plan_Id) 
-//	{
-//		Plan plan= userServ.getPlanById(plan_Id);
-//		adminServ.deleteplan(plan);
-//		return ResponseEntity.status(HttpStatus.CREATED).body(plan);
-//	}
-//	
-//	//this path will allow an admin or maybe a user to enable or disable a plan, not sure how to really add this though
-//	@PostMapping(path="/toggle/{plan_Id}")
-//	public ResponseEntity<Plan> toggle(@PathVariable int plan_Id) 
-//	{
-//		Plan plan= userServ.getPlanById(plan_Id);
-//		//plan.set
-//		return ResponseEntity.status(HttpStatus.CREATED).body(plan);
-//	}
-
-	/*
-	 * @PostMapping (path = "/address/{id}") public ResponseEntity<Void>
-	 * addAddress(@RequestBody Address newAddress){
-	 * 
-	 * if (newAddress !=null) { userServ.addNewAddress(newAddress); return
-	 * ResponseEntity.status(HttpStatus.CREATED).build(); } return
-	 * ResponseEntity.status(HttpStatus.BAD_REQUEST).build(); }
-	 * 
-	 * 
-	 * 
-	 * @GetMapping(path="/address/{id}") public ResponseEntity<Address>
-	 * LookUpAddress(@RequestBody String token,
-	 * 
-	 * @PathVariable int user_id) { Address UserAddressId =
-	 * userServ.getLookUpAddressByUser(user_id); if (UserAddressId!=null) { return
-	 * ResponseEntity.ok(UserAddressId); } else { return
-	 * ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); }
-	 * 
-	 * 
-	 * }
-	 * 
-	 * 
-	 * @DeleteMapping(path = "/address/{id}") public ResponseEntity<String>
-	 * deleteAddress(@RequestBody Address id) throws IncorrectAddressExeption {
-	 * Address addressDeletedId = userServ.deleteAddressById(id); String token =
-	 * Integer.toString(addressDeletedId.getAddress_id()); return
-	 * ResponseEntity.ok(token);
-	 * 
-	 * }
-	 */
-
-//	
-//	@GetMapping(path="/getActivePlans/{plan_Id}")
-//	public ResponseEntity<Set<Plan>> getActivePlans() 
-//	{
-//		Set<Plan> plans= adminServ.getActivePlans();
-//		return ResponseEntity.status(HttpStatus.CREATED).body(plans);
-//	}
 }

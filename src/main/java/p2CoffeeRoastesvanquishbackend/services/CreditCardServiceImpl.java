@@ -4,6 +4,8 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import p2CoffeeRoastesvanquishbackend.beans.Address;
 import p2CoffeeRoastesvanquishbackend.beans.CreditCard;
 import p2CoffeeRoastesvanquishbackend.data.CreditCardRepository;
 
@@ -30,13 +32,12 @@ public class CreditCardServiceImpl implements CreditCardService {
 	}
 
 	@Override
-	public Set<CreditCard> getLookUpCreditCardByUser(int user_id) {
-
-		Set <CreditCard> UserByCreditCard = creditCardRepo.findByUserId(user_id);
-		if (UserByCreditCard != null) {
-			creditCardRepo.findById(user_id);
-		}
-		return UserByCreditCard;
+	public Set<CreditCard> findCreditCardByUser(String username) {
+		Set<CreditCard>  cardsByUser = creditCardRepo.findByUserUsername(username);
+		return cardsByUser;
+		
 	}
+
+
 
 }
