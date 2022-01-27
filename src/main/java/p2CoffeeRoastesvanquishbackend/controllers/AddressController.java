@@ -64,7 +64,7 @@ public class AddressController {
 
 	}
 
-	@DeleteMapping(path = "/address/{id}")
+	@DeleteMapping(path = "/{id}")
 	public ResponseEntity<String> deleteAddress(@RequestBody int id) throws IncorrectAddressExeption {
 		Address addressDeletedId = addressService.deleteAddressById(id);
 		String token = Integer.toString(addressDeletedId.getAddress_id());
@@ -73,10 +73,10 @@ public class AddressController {
 	}
 
 	@GetMapping(path = "/{Id}")
-	public ResponseEntity<Address> getUserById(@PathVariable int id) {
-		Address FindAddressById = addressService.getAddressById(id);
-		if (FindAddressById != null)
-			return ResponseEntity.ok(FindAddressById);
+	public ResponseEntity<Address> AddressById(@PathVariable int id) {
+		Address AddressById = addressService.getAddressById(id);
+		if (AddressById != null)
+			return ResponseEntity.ok(AddressById);
 		else
 			return ResponseEntity.notFound().build();
 	}
