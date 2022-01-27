@@ -1,53 +1,49 @@
 package p2CoffeeRoastesvanquishbackend.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.stereotype.Service;
-import org.springframework.stereotype.Service;
+import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import p2CoffeeRoastesvanquishbackend.beans.Address;
 import p2CoffeeRoastesvanquishbackend.data.AddressRepository;
-
 import p2CoffeeRoastesvanquishbackend.exceptions.IncorrectAddressExeption;
 
 @Service
 
 public class AddressServiceImpl implements AddressService {
 
+	
 	private AddressRepository addressRepo;
 	
 	
-
 	@Autowired
-	public AddressServiceImpl(AddressRepository addressRepo) {
+	public AddressServiceImpl(AddressRepository AddressRepo) {
 		
-   	this.addressRepo = addressRepo;
+   	this.addressRepo= AddressRepo;
 
 	}
-	// This function is to Look up address by User id
-
-//	@Override
-//	public Address addNewAddress(Address newAddress) {
-//
-//		return addressRepo.create(newAddress);
-//	}
-
+	
 	// This function is to Add Address where user is
 
 	@Override
-	public Address getLookUpAddressByUser(int user_id) {
-		Address UserByAddress = addressRepo.findAddressByUserId(user_id);
-		if (UserByAddress != null) {
-			return null;
-		}
-		return UserByAddress;
+	public Address addNewAddress(Address newAddress) {
+           
+	    Address addressAdded =  addressRepo.save(newAddress);
+		
+	    if(addressAdded !=null) {
+	    
+		return addressAdded;}
+		else {return null;}
 	}
 
-    //  This function is to Delete address by Id
+	
+	
+
 
 	@Override
 	public Address deleteAddressById(int id) throws IncorrectAddressExeption {
 
-		Address DeleteUserAddressFromDatabase = addressRepo.findAddressByUserId(id);
+		Address DeleteUserAddressFromDatabase =addressRepo.findById(id);
 		if (DeleteUserAddressFromDatabase != null) {
 			return DeleteUserAddressFromDatabase;
 
@@ -55,6 +51,30 @@ public class AddressServiceImpl implements AddressService {
 
 			throw new IncorrectAddressExeption();
 		}
+
+	}
+
+	@Override
+	public Address getAddressById(int id) {
+		Address address =addressRepo.findById(id);
+		if (address != null) {
+			return address;
+
+		}
+//		else {
+//
+//			throw new IncorrectAddressExeption();
+//		}
+		return null;
+	}
+
+	@Override
+	public Set<Address> searchAddressByUsername(String input) {
+		
+//		String username = input.get("username");
+
+	Set<Address>  addressByUsername = addressRepo.findByUserUsername(input);
+	return addressByUsername;
 
 	}
 }
