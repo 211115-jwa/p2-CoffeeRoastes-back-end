@@ -19,46 +19,37 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 
-
-
 import p2CoffeeRoastesvanquishbackend.beans.Address;
 import p2CoffeeRoastesvanquishbackend.exceptions.IncorrectAddressExeption;
 import p2CoffeeRoastesvanquishbackend.services.AddressService;
 
-
-
 @Configuration
 @RestController
-@RequestMapping(path="/address")
-@CrossOrigin(origins="http://localhost:4200")
+@RequestMapping(path = "/address")
+@CrossOrigin(origins = "http://localhost:4200")
 public class AddressController {
-	
-	
 
 	private AddressService addressService;
-	
-	
-	  public AddressController() {
-	  
-	  super();
-	  
-	  }
-	 
-	
-	
-		@Autowired
-	  public AddressController(AddressService addressService) {
-	  this.addressService=addressService; }
-	 
-	
-	
-	@PostMapping (path = "/add")
-	public ResponseEntity<Void> addAddress(@RequestBody Address newAddress){
-		
-		if (newAddress !=null) {
-	
+
+	public AddressController() {
+
+		super();
+
+	}
+
+	@Autowired
+	public AddressController(AddressService addressService) {
+		this.addressService = addressService;
+	}
+
+	@PostMapping(path = "/add")
+	public ResponseEntity<Void> addAddress(@RequestBody Address newAddress) {
+
+		if (newAddress != null) {
+
 			addressService.addNewAddress(newAddress);
 			return ResponseEntity.status(HttpStatus.CREATED).build();
+<<<<<<< HEAD
 	}else {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 	}
@@ -82,20 +73,40 @@ public class AddressController {
 			}
 			
 			
+=======
+		} else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
-	
 
-	 @DeleteMapping(path = "/address/{id}")
+	}
+
+	@GetMapping(path = "/address/{id}")
+	public ResponseEntity<Set<Address>> LookUpAddress(@RequestBody String token, @PathVariable int user_id) {
+		Set<Address> UserAddressId = addressService.getLookUpAddressByUser(user_id);
+		if (UserAddressId != null) {
+			return ResponseEntity.ok(UserAddressId);
+		} else {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+>>>>>>> 17ab4c2592e6016853936cf1d093f9f0d4a994fe
+		}
+
+	}
+
+	@DeleteMapping(path = "/{id}")
 	public ResponseEntity<String> deleteAddress(@RequestBody int id) throws IncorrectAddressExeption {
 		Address addressDeletedId = addressService.deleteAddressById(id);
 		String token = Integer.toString(addressDeletedId.getAddress_id());
 		return ResponseEntity.ok(token);
 
-}
-	 
-	
-		
 	}
 
+	@GetMapping(path = "/{Id}")
+	public ResponseEntity<Address> LocateUserAddressById(@PathVariable int id) {
+		Address addressById = addressService.getAddressById(id);
+		if (addressById != null)
+			return ResponseEntity.ok(addressById);
+		else
+			return ResponseEntity.notFound().build();
+	}
 
-
+}
