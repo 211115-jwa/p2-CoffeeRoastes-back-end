@@ -169,8 +169,8 @@ public class UsersController {
 
 
 	@PostMapping(path = "/create/plan")
-	public ResponseEntity<Void>  createCustomerPlan(@RequestBody CustomerPlan newPlan) {
-	
+	public ResponseEntity<Void>createCustomerPlan(@RequestBody CustomerPlan newPlan) {
+	System.out.println(newPlan);
 		if (newPlan != null) {
 			userServ.CreateNewPlan(newPlan);
 			return ResponseEntity.status(HttpStatus.CREATED).build();

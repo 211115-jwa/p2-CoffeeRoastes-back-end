@@ -3,6 +3,7 @@ package p2CoffeeRoastesvanquishbackend.beans;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -32,10 +33,10 @@ public class CustomerPlan {
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	private User user;
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.MERGE)
     @JoinColumn(name="address_id")
 	private Address address;
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.MERGE)
 	@JoinColumn(name="card_id")
 	private CreditCard credit_card;
 	@Column(name="plan_activated_date")
@@ -101,14 +102,7 @@ public class CustomerPlan {
 		this.address = address;
 	}
 
-	public CreditCard getCard() {
-		return credit_card;
-	}
-
-
-	public void setCard(CreditCard credit_card) {
-		this.credit_card = credit_card;
-	}
+	
 
 	
 	public Plan getCustomerPlan() {
@@ -161,6 +155,24 @@ public class CustomerPlan {
 		return "CustomerPlan [customer_plan_id=" + customer_plan_id + ", plan=" + plan + ", user=" + user
 				+ ", planActivatedDate=" + planActivatedDate + ", active=" + active + ", address=" + address
 				+ ", credit_card=" + credit_card + "]";
+	}
+
+
+
+	public CreditCard getCredit_card() {
+		return credit_card;
+	}
+
+
+
+	public void setCredit_card(CreditCard credit_card) {
+		this.credit_card = credit_card;
+	}
+
+
+
+	public Plan getPlan() {
+		return plan;
 	}
 
 

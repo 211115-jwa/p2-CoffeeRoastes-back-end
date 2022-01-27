@@ -29,17 +29,17 @@ public class CreditCard
 	@JoinColumn(name="user_id")
 	private User user;
 
-	public CreditCard() {
-		id = 1;
-		card_number = "0000000000000000";
-		user = new User();
-	}
+//	public CreditCard() {
+//		id = 1;
+//		card_number = "0000000000000000";
+//		user = new User();
+//	}
 
-	public int getCard_id() {
+	public int getId() {
 		return id;
 	}
 
-	public void setCard_id(int card_id) {
+	public void setId(int card_id) {
 		this.id = card_id;
 	}
 

@@ -38,15 +38,7 @@ public class AddressServiceImpl implements AddressService {
 
 	
 	
-	// This function is to Look up address by User id
 
-	
-//	has to return a set
-
-    //  This function is to Delete address by Id
-	
-	
-//	get adress by id
 
 	@Override
 	public Address deleteAddressById(int id) throws IncorrectAddressExeption {
