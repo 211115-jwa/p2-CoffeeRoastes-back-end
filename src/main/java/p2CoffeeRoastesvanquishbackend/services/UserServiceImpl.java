@@ -95,7 +95,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public CustomerPlan CreateNewPlan(CustomerPlan customerplan) {
-		CustomerPlan plan =Customerplanrepo.save(customerplan);
+		CustomerPlan plan = Customerplanrepo.save(customerplan);
 		if (plan != null) {
 			return plan;
 		} else {
