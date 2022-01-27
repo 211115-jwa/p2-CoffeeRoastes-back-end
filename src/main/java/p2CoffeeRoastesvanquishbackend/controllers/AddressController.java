@@ -49,7 +49,6 @@ public class AddressController {
 
 			addressService.addNewAddress(newAddress);
 			return ResponseEntity.status(HttpStatus.CREATED).build();
-<<<<<<< HEAD
 	}else {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 	}
@@ -73,21 +72,6 @@ public class AddressController {
 			}
 			
 			
-=======
-		} else {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-		}
-
-	}
-
-	@GetMapping(path = "/address/{id}")
-	public ResponseEntity<Set<Address>> LookUpAddress(@RequestBody String token, @PathVariable int user_id) {
-		Set<Address> UserAddressId = addressService.getLookUpAddressByUser(user_id);
-		if (UserAddressId != null) {
-			return ResponseEntity.ok(UserAddressId);
-		} else {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
->>>>>>> 17ab4c2592e6016853936cf1d093f9f0d4a994fe
 		}
 
 	}
