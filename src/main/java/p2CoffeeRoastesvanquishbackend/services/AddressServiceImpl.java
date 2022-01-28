@@ -23,8 +23,6 @@ public class AddressServiceImpl implements AddressService {
 
 	}
 	
-	// This function is to Add Address where user is
-
 	@Override
 	public Address addNewAddress(Address newAddress) {
            
@@ -61,17 +59,13 @@ public class AddressServiceImpl implements AddressService {
 			return address;
 
 		}
-//		else {
-//
-//			throw new IncorrectAddressExeption();
-//		}
+
 		return null;
 	}
 
 	@Override
 	public Set<Address> searchAddressByUsername(String input) {
-		
-//		String username = input.get("username");
+
 
 	Set<Address>  addressByUsername = addressRepo.findByUserUsername(input);
 	return addressByUsername;

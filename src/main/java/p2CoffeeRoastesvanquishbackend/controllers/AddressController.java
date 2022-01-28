@@ -76,21 +76,21 @@ public class AddressController {
 
 	
 
-	@DeleteMapping(path = "/{id}")
-	public ResponseEntity<String> deleteAddress(@RequestBody int id) throws IncorrectAddressExeption {
-		Address addressDeletedId = addressService.deleteAddressById(id);
-		String token = Integer.toString(addressDeletedId.getId());
-		return ResponseEntity.ok(token);
+//	@DeleteMapping(path = "/{id}")
+//	public ResponseEntity<String> deleteAddress(@RequestBody int id) throws IncorrectAddressExeption {
+//		Address addressDeletedId = addressService.deleteAddressById(id);
+//		String token = Integer.toString(addressDeletedId.getId());
+//		return ResponseEntity.ok(token);
+//
+//	}
 
-	}
-
-	@GetMapping(path = "/{Id}")
-	public ResponseEntity<Address> LocateUserAddressById(@PathVariable int id) {
-		Address addressById = addressService.getAddressById(id);
-		if (addressById != null)
-			return ResponseEntity.ok(addressById);
-		else
-			return ResponseEntity.notFound().build();
-	}
+//	@GetMapping(path = "/{id}")
+//	public ResponseEntity<Address> LocateUserAddressById(@PathVariable int id) {
+//		Address addressById = addressService.getAddressById(id);
+//		if (addressById != null)
+//			return ResponseEntity.ok(addressById);
+//		else
+//			return ResponseEntity.notFound().build();
+//	}
 
 }
