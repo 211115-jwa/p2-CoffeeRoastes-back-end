@@ -22,8 +22,6 @@ public interface UserService {
 	public User logIn(String username, String password) throws IncorrectCredentialsException;
 
 
-
-
 	public User getUserById(int id);
 
 
@@ -31,20 +29,15 @@ public interface UserService {
 
 	public Plan getPlan(String preference, String type, String quantity, String grind, String frequency);
 
-	// public Address addNewAddress(Address newAddress);
-
-	// public Address getLookUpAddressByUser(int user_id);
 
 	public Set<CustomerPlan> getCustomerPlansByName(String name);
 
-	public CustomerPlan deletecustomerPlanbyID(int customerplanID) throws customerplandoesnotexist;
 
 	public CustomerPlan CreateNewPlan(CustomerPlan cusutomerplan);
 
-	public CustomerPlan toggle(int customer_plan_id);
 
-	public Set<CustomerPlan> getallactiveplans(int user_id);
 
-	// public Address deleteAddressById(Address id)throws IncorrectAddressExeption;
+
+
 
 }

@@ -66,23 +66,11 @@ public class UserServiceImpl implements UserService {
 
 
 	@Override
-	public CustomerPlan deletecustomerPlanbyID(int customerplanID) throws customerplandoesnotexist {
-		CustomerPlan customerplan = Customerplanrepo.getById(customerplanID);
-		Customerplanrepo.delete(customerplan);
-		if (customerplan != null) {
-			return customerplan;
-		} else {
-			throw new customerplandoesnotexist();
-		}
-	}
-
-	@Override
 	public Plan getPlan(String preference, String type, String quantity, String grind, String frequency) {
 		Plan planFromDatabase = planRepo.findByPreferenceAndTypeAndQuantityAndGrindAndFrequency(preference, type,
 				quantity, grind, frequency);
 
 		return planFromDatabase;
-
 	}
 
 	@Override
@@ -93,41 +81,7 @@ public class UserServiceImpl implements UserService {
 		} else {
 			return null;
 		}
-
 	}
-
-	@Override
-	public CustomerPlan toggle(int customerplanID) {
-		CustomerPlan targetcustomerplan = Customerplanrepo.getById(customerplanID);
-
-		if (targetcustomerplan.getActive_plan().equals("True")) {
-			targetcustomerplan.setActive_plan("False");
-		} else {
-			targetcustomerplan.setActive_plan("True");
-		}
-		return targetcustomerplan;
-	}
-
-	@SuppressWarnings("deprecation")
-	@Override
-	public Set<CustomerPlan> getallactiveplans(int user_id) {
-		Set<CustomerPlan> customerplans = new HashSet<CustomerPlan>();
-		for (int i = 0; i < Customerplanrepo.count(); i++) {
-			if (Customerplanrepo.getOne(i).getUser().getId() == user_id
-					&& Customerplanrepo.getOne(i).getActive_plan() == "True") {
-		
-		if(targetcustomerplan.getActive().equals("True"))
-		{
-			targetcustomerplan.setActive("False");
-		}
-		else
-		{
-			targetcustomerplan.setActive("True");
-		}
-		return targetcustomerplan;
-	}
-	
-
 
 	
 	@Override
@@ -140,19 +94,25 @@ public class UserServiceImpl implements UserService {
 
 
 
-	public User updateUser(User userToUpdate) {
-		if (userRepo.existsById(userToUpdate.getId())) {
-			userRepo.save(userToUpdate);
-			userToUpdate = userRepo.findById(userToUpdate.getId());
-			return userToUpdate;
-		}
-		return null;
-
-	}
+//	public User updateUser(User userToUpdate) {
+//		if (userRepo.existsById(userToUpdate.getId())) {
+//			userRepo.save(userToUpdate);
+//			userToUpdate = userRepo.findById(userToUpdate.getId());
+//			return userToUpdate;
+//		}
+//		return null;
+//
+//	}
 
 	@Override
 	public Set<CustomerPlan> getCustomerPlansByName(String name) {
 		Set<CustomerPlan>  plansByUser = Customerplanrepo.findByUserUsername(name);
 		return plansByUser;
+	}
+
+	@Override
+	public User updateUser(User userToUpdate) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

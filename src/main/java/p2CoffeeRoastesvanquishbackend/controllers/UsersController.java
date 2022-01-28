@@ -188,35 +188,30 @@ public class UsersController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(plans);
 	}
 
-	// Get to /users/getcustomerPlanbyID
-	@GetMapping(path = "/getcustomerPlanbyID/{customer_plan_id}")
-	public ResponseEntity<CustomerPlan> getPlanbyID(@PathVariable int customer_plan_id)
-			throws customerplandoesnotexist {
-		CustomerPlan customerplan = userServ.getcustomerPlanbyID(customer_plan_id);
-		return ResponseEntity.status(HttpStatus.CREATED).body(customerplan);
-	}
+//	// Get to /users/getcustomerPlanbyID
+//	@GetMapping(path = "/getcustomerPlanbyID/{customer_plan_id}")
+//	public ResponseEntity<CustomerPlan> getPlanbyID(@PathVariable int customer_plan_id)
+//			throws customerplandoesnotexist {
+//		CustomerPlan customerplan = userServ.getcustomerPlanbyID(customer_plan_id);
+//		return ResponseEntity.status(HttpStatus.CREATED).body(customerplan);
+//	}
 
-	// Delete to /users/deletePlanbyID
-	@DeleteMapping(path = "/deletePlanbyID/{customer_plan_id}")
-	public ResponseEntity<Integer> deletePlanbyID(@PathVariable int customer_plan_id) throws customerplandoesnotexist {
-		userServ.deletecustomerPlanbyID(customer_plan_id);
-		return ResponseEntity.status(HttpStatus.CREATED).body(customer_plan_id);
-	}
 
-	// Put to /users/togglecustomerplan
-	@PutMapping(path = "/togglecustomerplan/{customer_plan_id}")
-	public ResponseEntity<CustomerPlan> togglecustomerplan(@PathVariable int customer_plan_id)
-			throws customerplandoesnotexist {
-		CustomerPlan customerplan = userServ.toggle(customer_plan_id);
-		return ResponseEntity.status(HttpStatus.CREATED).body(customerplan);
-	}
 
-	// Get to /users/getallactiveplans
-	@GetMapping(path = "/getallactiveplans/{user_id}")
-	public ResponseEntity<Set<CustomerPlan>> getallactiveplans(@PathVariable int user_id) {
-		Set<CustomerPlan> activecustomerplans = userServ.getallactiveplans(user_id);
-		return ResponseEntity.status(HttpStatus.CREATED).body(activecustomerplans);
-	}
+//	// Put to /users/togglecustomerplan
+//	@PutMapping(path = "/togglecustomerplan/{customer_plan_id}")
+//	public ResponseEntity<CustomerPlan> togglecustomerplan(@PathVariable int customer_plan_id)
+//			throws customerplandoesnotexist {
+//		CustomerPlan customerplan = userServ.toggle(customer_plan_id);
+//		return ResponseEntity.status(HttpStatus.CREATED).body(customerplan);
+//	}
+
+//	// Get to /users/getallactiveplans
+//	@GetMapping(path = "/getallactiveplans/{user_id}")
+//	public ResponseEntity<Set<CustomerPlan>> getallactiveplans(@PathVariable int user_id) {
+//		Set<CustomerPlan> activecustomerplans = userServ.getallactiveplans(user_id);
+//		return ResponseEntity.status(HttpStatus.CREATED).body(activecustomerplans);
+//	}
 
 	
 	
