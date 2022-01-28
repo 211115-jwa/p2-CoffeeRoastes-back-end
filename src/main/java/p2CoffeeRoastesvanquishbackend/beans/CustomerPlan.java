@@ -1,7 +1,9 @@
 package p2CoffeeRoastesvanquishbackend.beans;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -22,24 +24,25 @@ import javax.persistence.OneToOne;
 
 public class CustomerPlan {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name= "customer_plan_id")
-	private int customer_plan_id =1;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="customer_plan_id")
+	private int customer_plan_id;
 	@ManyToOne
 	@JoinColumn(name="plan_id")
-	private Plan  plan;
-	@ManyToOne
+	private Plan plan;
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="user_id")
 	private User user;
-	@Column(name="plan_activated_date")
-	private LocalDateTime planActivatedDate;
-	private String active_plan;
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="address_id")
 	private Address address;
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.MERGE)
 	@JoinColumn(name="card_id")
 	private CreditCard credit_card;
+	@Column(name="plan_activated_date")
+	private LocalDateTime planActivatedDate;
+	@Column(name="active_plan")
+	private String active;
 	
 	
 	
@@ -48,9 +51,9 @@ public class CustomerPlan {
 		address = new Address();
 		plan = new Plan();
 		user = new User();
-		planActivatedDate= LocalDateTime.now();	// ("dd-MM-yyyy HH:mm:ss");
-		active_plan = "true";
-		credit_card= new  CreditCard();
+		credit_card= new CreditCard();
+		planActivatedDate= LocalDateTime.now();	// ("dd-MM-yyyy HH:mm:ss");	
+		active = "true";
 	}
 
 
@@ -95,39 +98,13 @@ public class CustomerPlan {
 	}
 
 
-
 	public void setAddress(Address address) {
 		this.address = address;
 	}
 
-
-
-	public String getActive_plan() {
-		return active_plan;
-	}
-
-
-
-	public void setActive_plan(String active_plan) {
-		this.active_plan = active_plan;
-	}
-
-
-
-	public CreditCard getCard() {
-		return credit_card;
-	}
-
-
-
-	public void setCard_id(CreditCard credit_card) {
-		this.credit_card = credit_card;
-	}
+	
 
 	
-	public Plan getCustomerPlan() {
-		return plan;
-	}
 
 	public void setPlan(Plan plan) {
 		this.plan = plan;
@@ -135,12 +112,69 @@ public class CustomerPlan {
 
 
 
+	public String getActive() {
+		return active;
+	}
+
+
+
+	public void setActive(String active) {
+		this.active = active;
+	}
+	
+	public CreditCard getCredit_card() {
+		return credit_card;
+	}
+
+
+
+	public void setCredit_card(CreditCard credit_card) {
+		this.credit_card = credit_card;
+	}
+
+
+
+	public Plan getPlan() {
+		return plan;
+	}
+
+
+
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(active, address, credit_card, customer_plan_id, plan, planActivatedDate, user);
+	}
+
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CustomerPlan other = (CustomerPlan) obj;
+		return Objects.equals(active, other.active) && Objects.equals(address, other.address)
+				&& Objects.equals(credit_card, other.credit_card) && customer_plan_id == other.customer_plan_id
+				&& Objects.equals(plan, other.plan) && Objects.equals(planActivatedDate, other.planActivatedDate)
+				&& Objects.equals(user, other.user);
+	}
+
+
+
 	@Override
 	public String toString() {
 		return "CustomerPlan [customer_plan_id=" + customer_plan_id + ", plan=" + plan + ", user=" + user
-				+ ", planActivatedDate=" + planActivatedDate + ", active_plan=" + active_plan + ", address=" + address
+				+ ", planActivatedDate=" + planActivatedDate + ", active=" + active + ", address=" + address
 				+ ", credit_card=" + credit_card + "]";
 	}
+
+
+
+
 
 
 
