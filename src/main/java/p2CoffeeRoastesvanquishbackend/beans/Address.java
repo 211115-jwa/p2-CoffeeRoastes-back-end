@@ -35,16 +35,16 @@ public class Address
 	private String apt;
 
 
-//	public Address() {
-//		id = 1;
-//		zip = 1;
-//		user = new User();
-//		street_address= "Default Street Address";
-//		city= "Default city";
-//		state= "Default state";
-//		apt= "Default apt";
-//	}
-//	
+	public Address() {
+		id = 1;
+		zip = 1;
+		user = new User();
+		street_address= "Default Street Address";
+		city= "Default city";
+		state= "Default state";
+		apt= "Default apt";
+	}
+	
 
 
 	public int getId() {

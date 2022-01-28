@@ -63,15 +63,7 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
-	@Override
-	public CustomerPlan getcustomerPlanbyID(int customerplanID) throws customerplandoesnotexist {
-		CustomerPlan customerplan = Customerplanrepo.getById(customerplanID);
-		if (customerplan != null) {
-			return customerplan;
-		} else {
-			throw new customerplandoesnotexist();
-		}
-	}
+
 
 	@Override
 	public CustomerPlan deletecustomerPlanbyID(int customerplanID) throws customerplandoesnotexist {
@@ -135,22 +127,7 @@ public class UserServiceImpl implements UserService {
 		return targetcustomerplan;
 	}
 	
-	//@SuppressWarnings("deprecation")
-	@Override
-	public Set<CustomerPlan> getallactiveplans(int user_id)
-	{
-		Set<CustomerPlan> customerplans = Customerplanrepo.findByActiveAndUser("True", userRepo.findById(user_id));
-		/*for(int i=0; i<Customerplanrepo.count(); i++)
-		{
-			if(Customerplanrepo.getOne(i).getUser().getId()==user_id && Customerplanrepo.getOne(i).getActive_plan()=="True")
-			{
- c9b0eebb13308f52f1c24069b8231708b2ee5c42
-				customerplans.add(Customerplanrepo.getOne(i));
-			}
-		}*/
-		
-		return customerplans;
-	}
+
 
 	
 	@Override
@@ -171,5 +148,11 @@ public class UserServiceImpl implements UserService {
 		}
 		return null;
 
+	}
+
+	@Override
+	public Set<CustomerPlan> getCustomerPlansByName(String name) {
+		Set<CustomerPlan>  plansByUser = Customerplanrepo.findByUserUsername(name);
+		return plansByUser;
 	}
 }

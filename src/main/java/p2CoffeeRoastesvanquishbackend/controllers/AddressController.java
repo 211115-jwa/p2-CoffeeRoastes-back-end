@@ -79,7 +79,7 @@ public class AddressController {
 	@DeleteMapping(path = "/{id}")
 	public ResponseEntity<String> deleteAddress(@RequestBody int id) throws IncorrectAddressExeption {
 		Address addressDeletedId = addressService.deleteAddressById(id);
-		String token = Integer.toString(addressDeletedId.getAddress_id());
+		String token = Integer.toString(addressDeletedId.getId());
 		return ResponseEntity.ok(token);
 
 	}

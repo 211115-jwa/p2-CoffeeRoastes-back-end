@@ -1,5 +1,6 @@
 package p2CoffeeRoastesvanquishbackend.controllers;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -226,6 +227,21 @@ public class UsersController {
 		User customer= userServ.register(newuser);
 		return ResponseEntity.status(HttpStatus.CREATED).body(customer);
 	}
+	
+	@PostMapping(path = "/allmyplans")
+	public ResponseEntity<Set<CustomerPlan>>findPlansByUsername(@RequestBody Map<String, String>  input) {
+		String username = input.get("username");
+		Set<CustomerPlan> cards =  userServ.getCustomerPlansByName(username);
+
+		if (cards!=null) {
+			return ResponseEntity.ok(cards);
+		} else {
+	
+			   Set<CustomerPlan> EmptySet = Collections.<CustomerPlan>emptySet();
+				return ResponseEntity.ok(EmptySet);
+		}
+	}
+
 	
 
 }

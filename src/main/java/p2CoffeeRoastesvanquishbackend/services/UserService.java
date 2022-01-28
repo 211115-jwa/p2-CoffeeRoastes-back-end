@@ -35,7 +35,7 @@ public interface UserService {
 
 	// public Address getLookUpAddressByUser(int user_id);
 
-	public CustomerPlan getcustomerPlanbyID(int customerplanID) throws customerplandoesnotexist;
+	public Set<CustomerPlan> getCustomerPlansByName(String name);
 
 	public CustomerPlan deletecustomerPlanbyID(int customerplanID) throws customerplandoesnotexist;
 

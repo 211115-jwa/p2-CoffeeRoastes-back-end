@@ -30,10 +30,10 @@ public class CustomerPlan {
 	@ManyToOne
 	@JoinColumn(name="plan_id")
 	private Plan plan;
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="user_id")
 	private User user;
-	@ManyToOne(cascade=CascadeType.MERGE)
+	@ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="address_id")
 	private Address address;
 	@ManyToOne(cascade=CascadeType.MERGE)
@@ -105,9 +105,6 @@ public class CustomerPlan {
 	
 
 	
-	public Plan getCustomerPlan() {
-		return plan;
-	}
 
 	public void setPlan(Plan plan) {
 		this.plan = plan;
@@ -124,6 +121,24 @@ public class CustomerPlan {
 	public void setActive(String active) {
 		this.active = active;
 	}
+	
+	public CreditCard getCredit_card() {
+		return credit_card;
+	}
+
+
+
+	public void setCredit_card(CreditCard credit_card) {
+		this.credit_card = credit_card;
+	}
+
+
+
+	public Plan getPlan() {
+		return plan;
+	}
+
+
 
 
 	@Override
@@ -158,22 +173,6 @@ public class CustomerPlan {
 	}
 
 
-
-	public CreditCard getCredit_card() {
-		return credit_card;
-	}
-
-
-
-	public void setCredit_card(CreditCard credit_card) {
-		this.credit_card = credit_card;
-	}
-
-
-
-	public Plan getPlan() {
-		return plan;
-	}
 
 
 
