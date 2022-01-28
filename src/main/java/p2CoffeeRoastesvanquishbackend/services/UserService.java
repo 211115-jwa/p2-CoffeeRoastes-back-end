@@ -30,10 +30,16 @@ public interface UserService {
 	public Plan getPlan(String preference, String type, String quantity, String grind, String frequency);
 
 
-	public Set<CustomerPlan> getCustomerPlansByName(String name);
+	public Set<CustomerPlan> getCustomerPlansByName(int i);
 
 
 	public CustomerPlan CreateNewPlan(CustomerPlan cusutomerplan);
+
+	public Object getcustomerPlanbyID(int i);
+
+	public void toggle(int i);
+
+	Set<CustomerPlan> getCustomerPlansByName(String name);
 
 
 

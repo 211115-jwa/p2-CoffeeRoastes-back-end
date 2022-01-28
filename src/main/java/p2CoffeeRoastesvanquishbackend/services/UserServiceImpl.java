@@ -104,15 +104,25 @@ public class UserServiceImpl implements UserService {
 //
 //	}
 
+
 	@Override
 	public Set<CustomerPlan> getCustomerPlansByName(String name) {
 		Set<CustomerPlan>  plansByUser = Customerplanrepo.findByUserUsername(name);
 		return plansByUser;
 	}
 
-	@Override
-	public User updateUser(User userToUpdate) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
+	  @Override public User updateUser(User userToUpdate) { // TODO Auto-generated
+	  return null; }
+	  
+	  @Override public Set<CustomerPlan> getCustomerPlansByName(int i) { // TODO
+	   return null; }
+	  
+	  @Override public Object getcustomerPlanbyID(int i) { // TODO Auto-generated
+	  return null; }
+	  
+	  public void toggle(int i) { // TODO Auto-generated method stub
+	  
+	  }
+	 
 }
