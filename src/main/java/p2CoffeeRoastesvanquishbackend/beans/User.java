@@ -39,17 +39,17 @@ public class User {
 	@JoinColumn(name="role_id") 
 	private Role role;
 
-	public User() {
-		id = 0;
-		firstName = "First";
-		lastName = "Last";
-		username = "username";
-		password = "password";
-		email = "johncena@yahoo.com";
-		createdOn = LocalDateTime.now();	// ("dd-MM-yyyy HH:mm:ss");
-		role = new Role();
-	}
-	
+//	public User() {
+//		id = 0;
+//		firstName = "First";
+//		lastName = "Last";
+//		username = "username";
+//		password = "password";
+//		email = "johncena@yahoo.com";
+//		createdOn = LocalDateTime.now();	// ("dd-MM-yyyy HH:mm:ss");
+//		role = new Role();
+//	}
+//	
 	
 	public int getId() {
 		return id;

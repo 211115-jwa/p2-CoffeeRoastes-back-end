@@ -169,7 +169,7 @@ public class UsersController {
 
 
 
-	@PostMapping(path = "/create/plan")
+	@PostMapping(path = "/create/userplan")
 	public ResponseEntity<Void>createCustomerPlan(@RequestBody CustomerPlan newPlan) {
 	System.out.println(newPlan);
 		if (newPlan != null) {
